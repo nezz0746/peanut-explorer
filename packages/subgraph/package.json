@@ -4,10 +4,10 @@
   "scripts": {
     "prepare": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ starter-counter-sepolia",
-    "create-local": "graph create --node http://localhost:8020/ starter-counter-sepolia",
-    "remove-local": "graph remove --node http://localhost:8020/ starter-counter-sepolia",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 starter-counter-sepolia",
+    "deploy": "graph deploy --studio peanut-base",
+    "create-local": "graph create --node http://localhost:8020/ peanut-base",
+    "remove-local": "graph remove --node http://localhost:8020/ peanut-base",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 peanut-base",
     "test": "graph test"
   },
   "dependencies": {
