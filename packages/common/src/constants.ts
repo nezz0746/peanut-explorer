@@ -1,10 +1,10 @@
-import { sepolia } from "viem/chains";
+import { base } from "viem/chains";
 import { Constants } from "./types";
 
-export type AppChainId = (typeof sepolia)["id"];
+export type AppChainId = (typeof base)["id"];
 
 export const constants: Constants = {
-  chain: sepolia,
+  chain: base,
   subgraphURL:
-    "https://api.studio.thegraph.com/query/958/starter-counter-sepolia/version/latest",
+    "https://api.studio.thegraph.com/query/958/peanut-base/version/latest",
 };
