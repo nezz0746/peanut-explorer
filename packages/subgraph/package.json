@@ -1,0 +1,18 @@
+{
+  "name": "@repo/subgraph",
+  "license": "UNLICENSED",
+  "scripts": {
+    "prepare": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ starter-counter-sepolia",
+    "create-local": "graph create --node http://localhost:8020/ starter-counter-sepolia",
+    "remove-local": "graph remove --node http://localhost:8020/ starter-counter-sepolia",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 starter-counter-sepolia",
+    "test": "graph test"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.81.0",
+    "@graphprotocol/graph-ts": "0.35.1"
+  },
+  "devDependencies": { "matchstick-as": "0.5.0" }
+}

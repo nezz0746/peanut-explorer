@@ -1,0 +1,25 @@
+query numberChanged($id: ID!, $block: Block_height, $subgraphError: _SubgraphErrorPolicy_!) {
+  numberChanged(id: $id, block: $block, subgraphError: $subgraphError) {
+    id
+    newNumber
+    blockNumber
+    blockTimestamp
+    transactionHash
+  }
+}query numberChangeds($skip: Int, $first: Int, $orderBy: NumberChanged_orderBy, $orderDirection: OrderDirection, $where: NumberChanged_filter, $block: Block_height, $subgraphError: _SubgraphErrorPolicy_!) {
+  numberChangeds(
+    skip: $skip
+    first: $first
+    orderBy: $orderBy
+    orderDirection: $orderDirection
+    where: $where
+    block: $block
+    subgraphError: $subgraphError
+  ) {
+    id
+    newNumber
+    blockNumber
+    blockTimestamp
+    transactionHash
+  }
+}

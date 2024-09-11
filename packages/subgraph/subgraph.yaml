@@ -1,0 +1,26 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Counter
+    network: sepolia
+    source:
+      address: "0x8685177c3fE0AC3815Aa52B865d6dDF2c8bD9a47"
+      abi: Counter
+      startBlock: 6661078
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - NumberChanged
+      abis:
+        - name: Counter
+          file: ./abis/Counter.json
+      eventHandlers:
+        - event: NumberChanged(uint256)
+          handler: handleNumberChanged
+      file: ./src/counter.ts
