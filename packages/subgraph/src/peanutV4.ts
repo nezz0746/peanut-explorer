@@ -69,6 +69,9 @@ export function handleDepositEvent(event: DepositEventEvent): void {
         depositTotals = new DepositTotals(addressZero);
         depositTotals.tokenAddress = contract_deposit.tokenAddress;
         depositTotals.totalDeposited = contract_deposit.amount;
+        depositTotals.name = "Ethereum";
+        depositTotals.symbol = "ETH";
+        depositTotals.decimals = 18;
         depositTotals.totalDeposists = BigInt.fromI32(1);
       } else {
         depositTotals.totalDeposited = depositTotals.totalDeposited.plus(
