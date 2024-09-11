@@ -24,8 +24,8 @@ export default function DepositTotalsCard(
   const [error, setError] = useState<string | null>(null);
 
   return (
-    <Card>
-      <CardHeader className="pb-2">
+    <Card className="">
+      <CardHeader className="p-4">
         <div className="h-8 w-8">
           {error ? (
             <div className="bg-gray-500 rounded-full w-full h-full flex flex-row justify-center items-center text-white">
@@ -44,17 +44,12 @@ export default function DepositTotalsCard(
         <CardDescription>
           {props.name} ({props.symbol})
         </CardDescription>
-        <CardTitle className="text-4xl">
+        <CardTitle className="text-2xl">
           {formatAmount(readableTotalDeposited)}
           {/* <span className="text-sm ml-2">Deposits</span> */}
         </CardTitle>
+        <CardDescription>{props.totalDeposists} Deposits</CardDescription>
       </CardHeader>
-      <CardContent>
-        <div className="text-xs text-muted-foreground">
-          {props.totalDeposists} Deposits
-        </div>
-      </CardContent>
-      <CardFooter></CardFooter>
     </Card>
   );
 }
