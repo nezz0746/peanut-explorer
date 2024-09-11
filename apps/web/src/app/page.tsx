@@ -1,33 +1,27 @@
-"use client";
+import {
+  _SubgraphErrorPolicy_,
+  DepositTotals_OrderBy,
+  OrderDirection,
+} from "@repo/webkit";
+import DepositTotalsCard from "../components/DepositTotalsCard";
+import { PeanutAPI } from "../services/peanut-api";
 
-import { usePrivy } from "@privy-io/react-auth";
-import { Button } from "@repo/ui/components/ui/button";
-import { useAccount } from "wagmi";
-
-export default function Home() {
-  const { login, user, logout, ready, authenticated } = usePrivy();
-  const { address, isConnected } = useAccount();
-
-  const onClick = async () => {
-    if (!ready) return;
-
-    if (!authenticated) {
-      login();
-    } else {
-      logout();
-    }
-  };
-
-  const buttonText = authenticated ? "Logout" : "Login";
-  const buttonDisabled = !ready;
+export default async function Home() {
+  const { depositTotals_collection } = await new PeanutAPI().getTotals({
+    where: {},
+    first: 5,
+    orderBy: DepositTotals_OrderBy.TotalDeposists,
+    orderDirection: OrderDirection.Desc,
+    subgraphError: _SubgraphErrorPolicy_.Allow,
+  });
 
   return (
     <div className="flex flex-col w-full justify-center p-4">
-      <Button disabled={buttonDisabled} onClick={onClick}>
-        {buttonText}
-      </Button>
-      <p>Connected Address (wagmi): {address}</p>
-      <p>Connected: {isConnected ? "true" : "false"}</p>
+      <div className="gap-2 grid grid-cols-5">
+        {depositTotals_collection.map((deposit) => {
+          return <DepositTotalsCard {...deposit} />;
+        })}
+      </div>
     </div>
   );
 }
