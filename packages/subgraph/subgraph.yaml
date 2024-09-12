@@ -8,7 +8,7 @@ dataSources:
     name: PeanutV4
     network: base
     source:
-      address: "0xC28551dE08997e4c013F50f6E566a0F31Fc46A61"
+      address: "0xC28551dE08997e4c013F50f6E566a0F31Fc46A61" # V4.3
       abi: PeanutV4
       startBlock: 10222663
     mapping:

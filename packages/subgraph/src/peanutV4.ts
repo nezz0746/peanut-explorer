@@ -116,5 +116,18 @@ export function handleWithdrawEvent(event: WithdrawEventEvent): void {
     deposit.claimed = true;
     deposit.recipient = event.params._recipientAddress;
     deposit.save();
+
+    let depositTotals = DepositTotals.load(deposit.tokenAddress.toHexString());
+
+    if (depositTotals !== null) {
+      if (depositTotals.totalClaimed == null) {
+        depositTotals.totalClaimed = BigInt.fromI32(0);
+      } else {
+        depositTotals.totalClaimed = depositTotals.totalClaimed.plus(
+          deposit.amount,
+        );
+      }
+      depositTotals.save();
+    }
   }
 }
