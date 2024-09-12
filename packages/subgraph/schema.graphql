@@ -6,7 +6,7 @@ type DepositTotals @entity(immutable: false) {
   decimals: Int
   totalDeposited: BigInt! # uint256
   totalDeposists: BigInt! # uint256
-  totalClaimed: BigInt # uint256
+  totalClaimed: BigInt! # uint256
 }
 
 type Deposit @entity(immutable: false) {

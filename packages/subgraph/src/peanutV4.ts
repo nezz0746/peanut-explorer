@@ -54,6 +54,7 @@ export function handleDepositEvent(event: DepositEventEvent): void {
         depositTotals.symbol = "ETH";
         depositTotals.decimals = 18;
         depositTotals.totalDeposists = BigInt.fromI32(1);
+        depositTotals.totalClaimed = BigInt.fromI32(0);
       } else {
         depositTotals.totalDeposited = depositTotals.totalDeposited.plus(
           contract_deposit.amount,
@@ -81,6 +82,7 @@ export function handleDepositEvent(event: DepositEventEvent): void {
         depositTotals.symbol = erc20.symbol();
         depositTotals.decimals = erc20.decimals();
         depositTotals.totalDeposists = BigInt.fromI32(1);
+        depositTotals.totalClaimed = BigInt.fromI32(0);
       } else {
         depositTotals.totalDeposited = depositTotals.totalDeposited.plus(
           contract_deposit.amount,
@@ -119,14 +121,10 @@ export function handleWithdrawEvent(event: WithdrawEventEvent): void {
 
     let depositTotals = DepositTotals.load(deposit.tokenAddress.toHexString());
 
-    if (depositTotals !== null) {
-      if (depositTotals.totalClaimed == null) {
-        depositTotals.totalClaimed = BigInt.fromI32(0);
-      } else {
-        depositTotals.totalClaimed = depositTotals.totalClaimed.plus(
-          deposit.amount,
-        );
-      }
+    if (depositTotals) {
+      depositTotals.totalClaimed = depositTotals.totalClaimed.plus(
+        deposit.amount,
+      );
       depositTotals.save();
     }
   }
