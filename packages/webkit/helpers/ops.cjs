@@ -80,7 +80,7 @@ const pullSchema = async function ({
 
       operationAST.variableDefinitions =
         operationAST.variableDefinitions.filter((v) =>
-          usedVariables.has(v.variable.name.value)
+          usedVariables.has(v.variable.name.value),
         );
 
       documentString += print(operationAST);
@@ -94,7 +94,7 @@ const pullSchema = async function ({
       if (err) {
         console.log(err);
       }
-    }
+    },
   );
 
   return documentString;
@@ -103,7 +103,7 @@ const pullSchema = async function ({
 const main = async function () {
   const urls = [
     {
-      schemaUrl: constants.subgraphURL,
+      schemaUrl: constants.subgraphURLs[10],
       fileName: "subgraph",
       depthLimit: 5,
     },

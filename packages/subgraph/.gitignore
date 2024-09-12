@@ -15,7 +15,6 @@ yarn-error.log*
 
 # Optional npm cache directory
 .npm
-template.yaml
 
 # Optional eslint cache
 .eslintcache

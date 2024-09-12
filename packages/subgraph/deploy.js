@@ -18,24 +18,28 @@ const main = async () => {
       contractAddress: "0xC28551dE08997e4c013F50f6E566a0F31Fc46A61",
       network: "base",
       graphName: "peanut-base",
+      chainId: 8453,
     },
     {
       startBlock: 115817906,
       contractAddress: "0xb75B6e4007795e84a0f9Db97EB19C6Fc13c84A5E",
       network: "optimism",
       graphName: "peanut-opt",
+      chainId: 10,
     },
     {
       startBlock: 178053936,
       contractAddress: "0x43B90099a203957F1adf35Dde15ac88b3e323e75",
       network: "arbitrum-one",
       graphName: "peanut-arb",
+      chainId: 42161,
     },
     {
       startBlock: 53186282,
       contractAddress: "0x5746f5F68705AE7a6f3Ce8D2F2A444FFa65411a4",
       network: "matic",
       graphName: "peanut-polygon",
+      chainId: 137,
     },
   ];
 

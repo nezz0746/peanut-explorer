@@ -8,6 +8,7 @@ query depositTotals($id: ID!, $block: Block_height, $subgraphError: _SubgraphErr
     totalDeposited
     totalDeposists
     totalClaimed
+    chainId
   }
 }query depositTotals_collection($skip: Int, $first: Int, $orderBy: DepositTotals_orderBy, $orderDirection: OrderDirection, $where: DepositTotals_filter, $block: Block_height, $subgraphError: _SubgraphErrorPolicy_!) {
   depositTotals_collection(
@@ -27,6 +28,7 @@ query depositTotals($id: ID!, $block: Block_height, $subgraphError: _SubgraphErr
     totalDeposited
     totalDeposists
     totalClaimed
+    chainId
   }
 }query deposit($id: ID!, $block: Block_height, $subgraphError: _SubgraphErrorPolicy_!) {
   deposit(id: $id, block: $block, subgraphError: $subgraphError) {
@@ -42,6 +44,7 @@ query depositTotals($id: ID!, $block: Block_height, $subgraphError: _SubgraphErr
       totalDeposited
       totalDeposists
       totalClaimed
+      chainId
     }
     contractType
     claimed
@@ -51,6 +54,7 @@ query depositTotals($id: ID!, $block: Block_height, $subgraphError: _SubgraphErr
     senderAddress
     recipient
     reclaimableAfter
+    chainId
   }
 }query deposits($skip: Int, $first: Int, $orderBy: Deposit_orderBy, $orderDirection: OrderDirection, $where: Deposit_filter, $block: Block_height, $subgraphError: _SubgraphErrorPolicy_!) {
   deposits(
@@ -74,6 +78,7 @@ query depositTotals($id: ID!, $block: Block_height, $subgraphError: _SubgraphErr
       totalDeposited
       totalDeposists
       totalClaimed
+      chainId
     }
     contractType
     claimed
@@ -83,6 +88,7 @@ query depositTotals($id: ID!, $block: Block_height, $subgraphError: _SubgraphErr
     senderAddress
     recipient
     reclaimableAfter
+    chainId
   }
 }query depositEvent($id: ID!, $block: Block_height, $subgraphError: _SubgraphErrorPolicy_!) {
   depositEvent(id: $id, block: $block, subgraphError: $subgraphError) {

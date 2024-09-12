@@ -6,11 +6,15 @@ schema:
 dataSources:
   - kind: ethereum
     name: PeanutV4
-    network: matic
+    network: {{ network }}
+    context:
+      chainId:
+        type: Int
+        data: {{ chainId }}
     source:
-      address: "0x5746f5F68705AE7a6f3Ce8D2F2A444FFa65411a4" # V4.3
+      address: "{{ contractAddress }}" # V4.3
       abi: PeanutV4
-      startBlock: 53186282
+      startBlock: {{ startBlock }}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7

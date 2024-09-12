@@ -1,4 +1,4 @@
-import { BigInt } from "@graphprotocol/graph-ts";
+import { BigInt, dataSource } from "@graphprotocol/graph-ts";
 import {
   DepositEvent as DepositEventEvent,
   MessageEvent as MessageEventEvent,
@@ -23,6 +23,7 @@ export function handleDepositEvent(event: DepositEventEvent): void {
 
     let deposit = new Deposit(event.params._index.toString());
 
+    deposit.chainId = dataSource.context().getI32("chainId");
     deposit.amount = contract_deposit.amount;
     deposit.tokenAddress = contract_deposit.tokenAddress;
     deposit.tokenTotals = contract_deposit.tokenAddress.toHexString();
@@ -48,6 +49,7 @@ export function handleDepositEvent(event: DepositEventEvent): void {
         depositTotals = new DepositTotals(
           contract_deposit.tokenAddress.toHexString(),
         );
+        depositTotals.chainId = dataSource.context().getI32("chainId");
         depositTotals.tokenAddress = contract_deposit.tokenAddress;
         depositTotals.totalDeposited = contract_deposit.amount;
         depositTotals.name = "Ethereum";
@@ -75,6 +77,7 @@ export function handleDepositEvent(event: DepositEventEvent): void {
         depositTotals = new DepositTotals(
           contract_deposit.tokenAddress.toHexString(),
         );
+        depositTotals.chainId = dataSource.context().getI32("chainId");
         depositTotals.tokenAddress = contract_deposit.tokenAddress;
         depositTotals.totalDeposited = contract_deposit.amount;
         let erc20 = ERC20.bind(contract_deposit.tokenAddress);

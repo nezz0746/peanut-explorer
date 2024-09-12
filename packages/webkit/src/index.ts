@@ -40,6 +40,7 @@ export type Block_Height = {
 export type Deposit = {
   __typename?: 'Deposit';
   amount: Scalars['BigInt']['output'];
+  chainId: Scalars['Int']['output'];
   claimed: Scalars['Boolean']['output'];
   contractType: Scalars['Int']['output'];
   id: Scalars['ID']['output'];
@@ -155,12 +156,13 @@ export enum DepositEvent_OrderBy {
 
 export type DepositTotals = {
   __typename?: 'DepositTotals';
+  chainId: Scalars['Int']['output'];
   decimals?: Maybe<Scalars['Int']['output']>;
   id: Scalars['ID']['output'];
   name?: Maybe<Scalars['String']['output']>;
   symbol?: Maybe<Scalars['String']['output']>;
   tokenAddress: Scalars['Bytes']['output'];
-  totalClaimed?: Maybe<Scalars['BigInt']['output']>;
+  totalClaimed: Scalars['BigInt']['output'];
   totalDeposists: Scalars['BigInt']['output'];
   totalDeposited: Scalars['BigInt']['output'];
 };
@@ -169,6 +171,14 @@ export type DepositTotals_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
   and?: InputMaybe<Array<InputMaybe<DepositTotals_Filter>>>;
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  chainId_gt?: InputMaybe<Scalars['Int']['input']>;
+  chainId_gte?: InputMaybe<Scalars['Int']['input']>;
+  chainId_in?: InputMaybe<Array<Scalars['Int']['input']>>;
+  chainId_lt?: InputMaybe<Scalars['Int']['input']>;
+  chainId_lte?: InputMaybe<Scalars['Int']['input']>;
+  chainId_not?: InputMaybe<Scalars['Int']['input']>;
+  chainId_not_in?: InputMaybe<Array<Scalars['Int']['input']>>;
   decimals?: InputMaybe<Scalars['Int']['input']>;
   decimals_gt?: InputMaybe<Scalars['Int']['input']>;
   decimals_gte?: InputMaybe<Scalars['Int']['input']>;
@@ -263,6 +273,7 @@ export type DepositTotals_Filter = {
 };
 
 export enum DepositTotals_OrderBy {
+  ChainId = 'chainId',
   Decimals = 'decimals',
   Id = 'id',
   Name = 'name',
@@ -285,6 +296,14 @@ export type Deposit_Filter = {
   amount_not?: InputMaybe<Scalars['BigInt']['input']>;
   amount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   and?: InputMaybe<Array<InputMaybe<Deposit_Filter>>>;
+  chainId?: InputMaybe<Scalars['Int']['input']>;
+  chainId_gt?: InputMaybe<Scalars['Int']['input']>;
+  chainId_gte?: InputMaybe<Scalars['Int']['input']>;
+  chainId_in?: InputMaybe<Array<Scalars['Int']['input']>>;
+  chainId_lt?: InputMaybe<Scalars['Int']['input']>;
+  chainId_lte?: InputMaybe<Scalars['Int']['input']>;
+  chainId_not?: InputMaybe<Scalars['Int']['input']>;
+  chainId_not_in?: InputMaybe<Array<Scalars['Int']['input']>>;
   claimed?: InputMaybe<Scalars['Boolean']['input']>;
   claimed_in?: InputMaybe<Array<Scalars['Boolean']['input']>>;
   claimed_not?: InputMaybe<Scalars['Boolean']['input']>;
@@ -389,6 +408,7 @@ export type Deposit_Filter = {
 
 export enum Deposit_OrderBy {
   Amount = 'amount',
+  ChainId = 'chainId',
   Claimed = 'claimed',
   ContractType = 'contractType',
   Id = 'id',
@@ -400,6 +420,7 @@ export enum Deposit_OrderBy {
   TokenAddress = 'tokenAddress',
   TokenId = 'tokenId',
   TokenTotals = 'tokenTotals',
+  TokenTotalsChainId = 'tokenTotals__chainId',
   TokenTotalsDecimals = 'tokenTotals__decimals',
   TokenTotalsId = 'tokenTotals__id',
   TokenTotalsName = 'tokenTotals__name',
@@ -861,7 +882,7 @@ export type DepositTotalsQueryVariables = Exact<{
 }>;
 
 
-export type DepositTotalsQuery = { __typename?: 'Query', depositTotals?: { __typename?: 'DepositTotals', id: string, tokenAddress: any, name?: string | null, symbol?: string | null, decimals?: number | null, totalDeposited: any, totalDeposists: any, totalClaimed?: any | null } | null };
+export type DepositTotalsQuery = { __typename?: 'Query', depositTotals?: { __typename?: 'DepositTotals', id: string, tokenAddress: any, name?: string | null, symbol?: string | null, decimals?: number | null, totalDeposited: any, totalDeposists: any, totalClaimed: any, chainId: number } | null };
 
 export type DepositTotals_CollectionQueryVariables = Exact<{
   skip?: InputMaybe<Scalars['Int']['input']>;
@@ -874,7 +895,7 @@ export type DepositTotals_CollectionQueryVariables = Exact<{
 }>;
 
 
-export type DepositTotals_CollectionQuery = { __typename?: 'Query', depositTotals_collection: Array<{ __typename?: 'DepositTotals', id: string, tokenAddress: any, name?: string | null, symbol?: string | null, decimals?: number | null, totalDeposited: any, totalDeposists: any, totalClaimed?: any | null }> };
+export type DepositTotals_CollectionQuery = { __typename?: 'Query', depositTotals_collection: Array<{ __typename?: 'DepositTotals', id: string, tokenAddress: any, name?: string | null, symbol?: string | null, decimals?: number | null, totalDeposited: any, totalDeposists: any, totalClaimed: any, chainId: number }> };
 
 export type DepositQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -883,7 +904,7 @@ export type DepositQueryVariables = Exact<{
 }>;
 
 
-export type DepositQuery = { __typename?: 'Query', deposit?: { __typename?: 'Deposit', id: string, amount: any, tokenAddress: any, contractType: number, claimed: boolean, requiresMFA: boolean, timestamp: any, tokenId: any, senderAddress: any, recipient?: any | null, reclaimableAfter?: any | null, tokenTotals: { __typename?: 'DepositTotals', id: string, tokenAddress: any, name?: string | null, symbol?: string | null, decimals?: number | null, totalDeposited: any, totalDeposists: any, totalClaimed?: any | null } } | null };
+export type DepositQuery = { __typename?: 'Query', deposit?: { __typename?: 'Deposit', id: string, amount: any, tokenAddress: any, contractType: number, claimed: boolean, requiresMFA: boolean, timestamp: any, tokenId: any, senderAddress: any, recipient?: any | null, reclaimableAfter?: any | null, chainId: number, tokenTotals: { __typename?: 'DepositTotals', id: string, tokenAddress: any, name?: string | null, symbol?: string | null, decimals?: number | null, totalDeposited: any, totalDeposists: any, totalClaimed: any, chainId: number } } | null };
 
 export type DepositsQueryVariables = Exact<{
   skip?: InputMaybe<Scalars['Int']['input']>;
@@ -896,7 +917,7 @@ export type DepositsQueryVariables = Exact<{
 }>;
 
 
-export type DepositsQuery = { __typename?: 'Query', deposits: Array<{ __typename?: 'Deposit', id: string, amount: any, tokenAddress: any, contractType: number, claimed: boolean, requiresMFA: boolean, timestamp: any, tokenId: any, senderAddress: any, recipient?: any | null, reclaimableAfter?: any | null, tokenTotals: { __typename?: 'DepositTotals', id: string, tokenAddress: any, name?: string | null, symbol?: string | null, decimals?: number | null, totalDeposited: any, totalDeposists: any, totalClaimed?: any | null } }> };
+export type DepositsQuery = { __typename?: 'Query', deposits: Array<{ __typename?: 'Deposit', id: string, amount: any, tokenAddress: any, contractType: number, claimed: boolean, requiresMFA: boolean, timestamp: any, tokenId: any, senderAddress: any, recipient?: any | null, reclaimableAfter?: any | null, chainId: number, tokenTotals: { __typename?: 'DepositTotals', id: string, tokenAddress: any, name?: string | null, symbol?: string | null, decimals?: number | null, totalDeposited: any, totalDeposists: any, totalClaimed: any, chainId: number } }> };
 
 export type DepositEventQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -976,6 +997,7 @@ export const DepositTotalsDocument = gql`
     totalDeposited
     totalDeposists
     totalClaimed
+    chainId
   }
 }
     `;
@@ -998,6 +1020,7 @@ export const DepositTotals_CollectionDocument = gql`
     totalDeposited
     totalDeposists
     totalClaimed
+    chainId
   }
 }
     `;
@@ -1016,6 +1039,7 @@ export const DepositDocument = gql`
       totalDeposited
       totalDeposists
       totalClaimed
+      chainId
     }
     contractType
     claimed
@@ -1025,6 +1049,7 @@ export const DepositDocument = gql`
     senderAddress
     recipient
     reclaimableAfter
+    chainId
   }
 }
     `;
@@ -1051,6 +1076,7 @@ export const DepositsDocument = gql`
       totalDeposited
       totalDeposists
       totalClaimed
+      chainId
     }
     contractType
     claimed
@@ -1060,6 +1086,7 @@ export const DepositsDocument = gql`
     senderAddress
     recipient
     reclaimableAfter
+    chainId
   }
 }
     `;

@@ -7,6 +7,7 @@ type DepositTotals @entity(immutable: false) {
   totalDeposited: BigInt! # uint256
   totalDeposists: BigInt! # uint256
   totalClaimed: BigInt! # uint256
+  chainId: Int!
 }
 
 type Deposit @entity(immutable: false) {
@@ -22,6 +23,7 @@ type Deposit @entity(immutable: false) {
   senderAddress: Bytes! # address
   recipient: Bytes # address
   reclaimableAfter: BigInt
+  chainId: Int!
 }
 
 type DepositEvent @entity(immutable: true) {
