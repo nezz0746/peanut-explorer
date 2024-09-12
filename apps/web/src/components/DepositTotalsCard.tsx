@@ -2,9 +2,7 @@
 
 import {
   Card,
-  CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@repo/ui/components/ui/card";
@@ -26,26 +24,26 @@ export default function DepositTotalsCard(
   return (
     <Card className="">
       <CardHeader className="p-4">
-        <div className="h-8 w-8">
-          {error ? (
-            <div className="bg-gray-500 rounded-full w-full h-full flex flex-row justify-center items-center text-white">
-              {props.name?.[0]}
-            </div>
-          ) : (
-            <Image
-              src={`https://assets.smold.app/api/token/${base.id}/${props.tokenAddress}/logo-128.png`}
-              height={100}
-              width={100}
-              onError={() => setError("Failed to load image")}
-              alt=""
-            />
-          )}
-        </div>
         <CardDescription>
           {props.name} ({props.symbol})
         </CardDescription>
-        <CardTitle className="text-2xl">
+        <CardTitle className="text-2xl flex flex-row items-center gap-2">
           {formatAmount(readableTotalDeposited)}
+          <div className="h-6 w-6">
+            {error ? (
+              <div className="bg-gray-500 rounded-full w-full h-full flex flex-row justify-center items-center text-white">
+                <p className="text-base">{props.name?.[0]}</p>
+              </div>
+            ) : (
+              <Image
+                src={`https://assets.smold.app/api/token/${base.id}/${props.tokenAddress}/logo-128.png`}
+                height={100}
+                width={100}
+                onError={() => setError("Failed to load image")}
+                alt=""
+              />
+            )}
+          </div>
           {/* <span className="text-sm ml-2">Deposits</span> */}
         </CardTitle>
         <CardDescription>{props.totalDeposists} Deposits</CardDescription>

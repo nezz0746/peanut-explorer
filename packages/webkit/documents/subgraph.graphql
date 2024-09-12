@@ -33,6 +33,16 @@ query depositTotals($id: ID!, $block: Block_height, $subgraphError: _SubgraphErr
     id
     amount
     tokenAddress
+    tokenTotals {
+      id
+      tokenAddress
+      name
+      symbol
+      decimals
+      totalDeposited
+      totalDeposists
+      totalClaimed
+    }
     contractType
     claimed
     requiresMFA
@@ -55,6 +65,16 @@ query depositTotals($id: ID!, $block: Block_height, $subgraphError: _SubgraphErr
     id
     amount
     tokenAddress
+    tokenTotals {
+      id
+      tokenAddress
+      name
+      symbol
+      decimals
+      totalDeposited
+      totalDeposists
+      totalClaimed
+    }
     contractType
     claimed
     requiresMFA

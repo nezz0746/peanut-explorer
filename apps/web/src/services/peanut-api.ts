@@ -1,5 +1,6 @@
 import {
   DepositTotals_CollectionQueryVariables,
+  DepositsQueryVariables,
   Sdk,
   getSdk as getAPI,
 } from "@repo/webkit";
@@ -15,5 +16,9 @@ export class PeanutAPI {
 
   async getTotals(props: DepositTotals_CollectionQueryVariables) {
     return this.sdk.depositTotals_collection(props);
+  }
+
+  async getDeposits(props: DepositsQueryVariables) {
+    return this.sdk.deposits(props);
   }
 }

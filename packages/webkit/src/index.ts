@@ -50,6 +50,7 @@ export type Deposit = {
   timestamp: Scalars['BigInt']['output'];
   tokenAddress: Scalars['Bytes']['output'];
   tokenId: Scalars['BigInt']['output'];
+  tokenTotals: DepositTotals;
 };
 
 export type DepositEvent = {
@@ -363,6 +364,27 @@ export type Deposit_Filter = {
   tokenId_lte?: InputMaybe<Scalars['BigInt']['input']>;
   tokenId_not?: InputMaybe<Scalars['BigInt']['input']>;
   tokenId_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  tokenTotals?: InputMaybe<Scalars['String']['input']>;
+  tokenTotals_?: InputMaybe<DepositTotals_Filter>;
+  tokenTotals_contains?: InputMaybe<Scalars['String']['input']>;
+  tokenTotals_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  tokenTotals_ends_with?: InputMaybe<Scalars['String']['input']>;
+  tokenTotals_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  tokenTotals_gt?: InputMaybe<Scalars['String']['input']>;
+  tokenTotals_gte?: InputMaybe<Scalars['String']['input']>;
+  tokenTotals_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  tokenTotals_lt?: InputMaybe<Scalars['String']['input']>;
+  tokenTotals_lte?: InputMaybe<Scalars['String']['input']>;
+  tokenTotals_not?: InputMaybe<Scalars['String']['input']>;
+  tokenTotals_not_contains?: InputMaybe<Scalars['String']['input']>;
+  tokenTotals_not_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  tokenTotals_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  tokenTotals_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  tokenTotals_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  tokenTotals_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  tokenTotals_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  tokenTotals_starts_with?: InputMaybe<Scalars['String']['input']>;
+  tokenTotals_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum Deposit_OrderBy {
@@ -376,7 +398,16 @@ export enum Deposit_OrderBy {
   SenderAddress = 'senderAddress',
   Timestamp = 'timestamp',
   TokenAddress = 'tokenAddress',
-  TokenId = 'tokenId'
+  TokenId = 'tokenId',
+  TokenTotals = 'tokenTotals',
+  TokenTotalsDecimals = 'tokenTotals__decimals',
+  TokenTotalsId = 'tokenTotals__id',
+  TokenTotalsName = 'tokenTotals__name',
+  TokenTotalsSymbol = 'tokenTotals__symbol',
+  TokenTotalsTokenAddress = 'tokenTotals__tokenAddress',
+  TokenTotalsTotalClaimed = 'tokenTotals__totalClaimed',
+  TokenTotalsTotalDeposists = 'tokenTotals__totalDeposists',
+  TokenTotalsTotalDeposited = 'tokenTotals__totalDeposited'
 }
 
 export type MessageEvent = {
@@ -852,7 +883,7 @@ export type DepositQueryVariables = Exact<{
 }>;
 
 
-export type DepositQuery = { __typename?: 'Query', deposit?: { __typename?: 'Deposit', id: string, amount: any, tokenAddress: any, contractType: number, claimed: boolean, requiresMFA: boolean, timestamp: any, tokenId: any, senderAddress: any, recipient?: any | null, reclaimableAfter?: any | null } | null };
+export type DepositQuery = { __typename?: 'Query', deposit?: { __typename?: 'Deposit', id: string, amount: any, tokenAddress: any, contractType: number, claimed: boolean, requiresMFA: boolean, timestamp: any, tokenId: any, senderAddress: any, recipient?: any | null, reclaimableAfter?: any | null, tokenTotals: { __typename?: 'DepositTotals', id: string, tokenAddress: any, name?: string | null, symbol?: string | null, decimals?: number | null, totalDeposited: any, totalDeposists: any, totalClaimed?: any | null } } | null };
 
 export type DepositsQueryVariables = Exact<{
   skip?: InputMaybe<Scalars['Int']['input']>;
@@ -865,7 +896,7 @@ export type DepositsQueryVariables = Exact<{
 }>;
 
 
-export type DepositsQuery = { __typename?: 'Query', deposits: Array<{ __typename?: 'Deposit', id: string, amount: any, tokenAddress: any, contractType: number, claimed: boolean, requiresMFA: boolean, timestamp: any, tokenId: any, senderAddress: any, recipient?: any | null, reclaimableAfter?: any | null }> };
+export type DepositsQuery = { __typename?: 'Query', deposits: Array<{ __typename?: 'Deposit', id: string, amount: any, tokenAddress: any, contractType: number, claimed: boolean, requiresMFA: boolean, timestamp: any, tokenId: any, senderAddress: any, recipient?: any | null, reclaimableAfter?: any | null, tokenTotals: { __typename?: 'DepositTotals', id: string, tokenAddress: any, name?: string | null, symbol?: string | null, decimals?: number | null, totalDeposited: any, totalDeposists: any, totalClaimed?: any | null } }> };
 
 export type DepositEventQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -976,6 +1007,16 @@ export const DepositDocument = gql`
     id
     amount
     tokenAddress
+    tokenTotals {
+      id
+      tokenAddress
+      name
+      symbol
+      decimals
+      totalDeposited
+      totalDeposists
+      totalClaimed
+    }
     contractType
     claimed
     requiresMFA
@@ -1001,6 +1042,16 @@ export const DepositsDocument = gql`
     id
     amount
     tokenAddress
+    tokenTotals {
+      id
+      tokenAddress
+      name
+      symbol
+      decimals
+      totalDeposited
+      totalDeposists
+      totalClaimed
+    }
     contractType
     claimed
     requiresMFA
