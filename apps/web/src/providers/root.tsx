@@ -3,13 +3,16 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
 import { wagmiConfig } from "../wagmi";
+import { ChainProvider } from "../context/ChainContext";
 
 const queryClient = new QueryClient();
 
 const RootProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <WagmiProvider config={wagmiConfig}>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      <QueryClientProvider client={queryClient}>
+        <ChainProvider>{children}</ChainProvider>
+      </QueryClientProvider>
     </WagmiProvider>
   );
 };

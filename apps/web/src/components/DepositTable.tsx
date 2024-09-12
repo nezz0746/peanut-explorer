@@ -21,6 +21,7 @@ import TokenLogo from "./TokenLogo";
 import SenderCell from "./SenderCell";
 import { formatAmount } from "../helpers";
 import { CheckIcon, LoaderIcon } from "lucide-react";
+import { useExplorerChain } from "../context/ChainContext";
 dayjs.extend(relativeTime);
 
 type TableDeposit = DepositsQuery["deposits"][0];
@@ -103,11 +104,12 @@ const columns: ColumnDef<TableDeposit, keyof TableDeposit>[] = [
 
 const DepositTable = () => {
   const [searchString, setSearchString] = useState<string | null>(null);
+  const { chainId } = useExplorerChain();
 
   const { data } = useQuery({
-    queryKey: ["depositTable", searchString],
+    queryKey: ["depositTable", searchString, chainId],
     queryFn: async () => {
-      return new PeanutAPI().getDeposits({
+      return new PeanutAPI(chainId).getDeposits({
         where: !searchString
           ? {}
           : {

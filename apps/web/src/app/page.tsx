@@ -1,3 +1,5 @@
+"use client";
+
 import {
   _SubgraphErrorPolicy_,
   DepositTotals_OrderBy,
@@ -13,19 +15,27 @@ import {
   CardHeader,
   CardTitle,
 } from "@repo/ui/components/ui/card";
+import { useExplorerChain } from "../context/ChainContext";
+import { useQuery } from "@tanstack/react-query";
 
-export default async function Home() {
-  const { depositTotals_collection } = await new PeanutAPI().getTotals({
-    where: {},
-    first: 5,
-    orderBy: DepositTotals_OrderBy.TotalDeposists,
-    orderDirection: OrderDirection.Desc,
-    subgraphError: _SubgraphErrorPolicy_.Allow,
+export default function Home() {
+  const { chainId } = useExplorerChain();
+  const { data } = useQuery({
+    queryKey: ["depositTotals", chainId],
+    queryFn: async () => {
+      return new PeanutAPI(chainId).getTotals({
+        where: {},
+        first: 5,
+        orderBy: DepositTotals_OrderBy.TotalDeposists,
+        orderDirection: OrderDirection.Desc,
+        subgraphError: _SubgraphErrorPolicy_.Allow,
+      });
+    },
   });
 
   return (
     <div className="flex flex-col md:flex-row w-full justify-center p-4 gap-4">
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 md:w-[400px]">
         <Card>
           <CardHeader>
             <CardTitle>Stats</CardTitle>
@@ -35,7 +45,7 @@ export default async function Home() {
           </CardHeader>
           <CardContent>
             <div className="gap-2 grid grid-cols-2">
-              {depositTotals_collection.map((deposit) => {
+              {data?.depositTotals_collection.map((deposit) => {
                 return <DepositTotalsCard {...deposit} />;
               })}
             </div>

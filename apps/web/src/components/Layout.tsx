@@ -1,5 +1,7 @@
+"use client";
+
 import Link from "next/link";
-import { CircleUser, Menu, Search } from "lucide-react";
+import { CircleUser, Menu } from "lucide-react";
 import { Button } from "@repo/ui/components/ui/button";
 import {
   DropdownMenu,
@@ -9,7 +11,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@repo/ui/components/ui/dropdown-menu";
-import { Input } from "@repo/ui/components/ui/input";
 import {
   Sheet,
   SheetContent,
@@ -17,13 +18,31 @@ import {
 } from "@repo/ui/components/ui/sheet";
 import Image from "next/image";
 import peanutman from "../../public/peanutman.svg";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+} from "@repo/ui/components/ui/select";
+import { constants, SupportedChainsIds } from "@repo/common";
+import { useExplorerChain } from "../context/ChainContext";
 
 export const description =
   "An application shell with a header and main content area. The header has a navbar, a search input and and a user nav dropdown. The user nav is toggled by a button with an avatar image. The main content area is divided into two rows. The first row has a grid of cards with statistics. The second row has a grid of cards with a table of recent transactions and a list of recent sales.";
 
 const links: any[] = [];
 
+const networkNames: Record<SupportedChainsIds, string> = {
+  "10": "Optimism",
+  "137": "Polygon",
+  "42161": "Arbitrum",
+  "8453": "Base",
+};
+
 export function Layout({ children }: { children: React.ReactNode }) {
+  const { setChainId, chainId: explorerChainId } = useExplorerChain();
   return (
     <div className="flex min-h-screen w-full flex-col">
       <header className="sticky top-0 flex bg-white z-10 h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
@@ -108,6 +127,25 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </p>
         </Link>
         <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4 justify-end">
+          <Select
+            onValueChange={(value) => {
+              setChainId(parseInt(value) as SupportedChainsIds);
+            }}
+          >
+            <SelectTrigger className="w-[180px]">
+              {networkNames[explorerChainId]}
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Networks</SelectLabel>
+                {Object.keys(constants.subgraphURLs).map((chainId) => (
+                  <SelectItem value={chainId}>
+                    {networkNames[parseInt(chainId) as SupportedChainsIds]}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>{" "}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="secondary" size="icon" className="rounded-full">

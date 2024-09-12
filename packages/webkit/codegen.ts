@@ -5,7 +5,7 @@ const config: CodegenConfig = {
   overwrite: true,
   generates: {
     "./src/index.ts": {
-      schema: constants.subgraphURL,
+      schema: constants.subgraphURLs[constants.chain.id],
       documents: "./documents/subgraph.graphql",
       plugins: [
         "typescript",

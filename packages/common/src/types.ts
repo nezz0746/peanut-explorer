@@ -1,6 +1,6 @@
 import { Chain } from "viem";
 
-export type Constants = {
+export type Constants<SupportedChainsIds extends number> = {
   chain: Chain;
-  subgraphURL: string;
+  subgraphURLs: Record<SupportedChainsIds, string>;
 };

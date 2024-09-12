@@ -3,8 +3,12 @@ import { Constants } from "./types";
 
 export type AppChainId = (typeof sepolia)["id"];
 
-export const constants: Constants = {
+export type SupportedChainsIds = (typeof sepolia)["id"];
+
+export const constants: Constants<SupportedChainsIds> = {
   chain: sepolia,
-  subgraphURL:
-    "https://api.studio.thegraph.com/query/958/starter-counter-sepolia/version/latest",
+  subgraphURLs: {
+    [sepolia.id]:
+      "https://api.studio.thegraph.com/query/958/sepolia/version/latest",
+  },
 };

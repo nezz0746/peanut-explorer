@@ -4,14 +4,14 @@ import {
   Sdk,
   getSdk as getAPI,
 } from "@repo/webkit";
-import { constants } from "@repo/common";
+import { constants, SupportedChainsIds } from "@repo/common";
 import { GraphQLClient } from "graphql-request";
 
 export class PeanutAPI {
   sdk: Sdk;
 
-  constructor() {
-    this.sdk = getAPI(new GraphQLClient(constants.subgraphURL));
+  constructor(chainId: SupportedChainsIds) {
+    this.sdk = getAPI(new GraphQLClient(constants.subgraphURLs[chainId]));
   }
 
   async getTotals(props: DepositTotals_CollectionQueryVariables) {

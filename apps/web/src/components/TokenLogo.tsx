@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { getTokenImageURL } from "../helpers";
 import Image from "next/image";
+import { useExplorerChain } from "../context/ChainContext";
 
 type TokenLogoProps = {
   tokenAddress: string;
@@ -9,6 +10,7 @@ type TokenLogoProps = {
 
 const TokenLogo = ({ tokenAddress, name }: TokenLogoProps) => {
   const [error, setError] = useState<string | null>(null);
+  const { chainId } = useExplorerChain();
 
   return (
     <div className="h-6 w-6">
@@ -18,7 +20,7 @@ const TokenLogo = ({ tokenAddress, name }: TokenLogoProps) => {
         </div>
       ) : (
         <Image
-          src={getTokenImageURL(tokenAddress)}
+          src={getTokenImageURL(tokenAddress, chainId.toString())}
           height={100}
           width={100}
           onError={() => setError("Failed to load image")}
