@@ -1,10 +1,12 @@
 import { createConfig } from "@privy-io/wagmi";
-import { sepolia } from "viem/chains";
+import { base, mainnet } from "viem/chains";
 import { http } from "wagmi";
+import { alchemyKey } from "./env";
 
 export const wagmiConfig = createConfig({
-  chains: [sepolia],
+  chains: [mainnet, base],
   transports: {
-    [sepolia.id]: http(""),
+    [mainnet.id]: http(`https://eth-mainnet.g.alchemy.com/v2/${alchemyKey}`),
+    [base.id]: http(`https://base-mainnet.g.alchemy.com/v2/${alchemyKey}`),
   },
 });

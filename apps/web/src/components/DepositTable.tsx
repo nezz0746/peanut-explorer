@@ -11,8 +11,6 @@ import {
 } from "@repo/webkit";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "./DataTable";
-import { getExplorerLink, truncateAddress } from "../helpers";
-import Link from "next/link";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { formatUnits } from "viem";
@@ -20,6 +18,8 @@ import { Badge } from "@repo/ui/components/ui/badge";
 import { useState } from "react";
 import SearchBar from "./SearchBar";
 import TokenLogo from "./TokenLogo";
+import SenderCell from "./SenderCell";
+import { formatAmount } from "../helpers";
 dayjs.extend(relativeTime);
 
 type TableDeposit = DepositsQuery["deposits"][0];
@@ -34,15 +34,7 @@ const columns: ColumnDef<TableDeposit, keyof TableDeposit>[] = [
     header: "Sender",
     cell({ row }) {
       const sender = row.getValue<Deposit["senderAddress"]>("senderAddress");
-      return (
-        <Link
-          href={getExplorerLink(sender, "address")}
-          target="_blank"
-          className="underline hover:text-blue-400"
-        >
-          {truncateAddress(sender)}
-        </Link>
-      );
+      return <SenderCell sender={sender} />;
     },
   },
   {
@@ -65,7 +57,7 @@ const columns: ColumnDef<TableDeposit, keyof TableDeposit>[] = [
 
       return (
         <div className="flex flex-row gap-2 items-center">
-          <p>{token.name}</p>
+          <p>{token.symbol}</p>
           <TokenLogo tokenAddress={token.tokenAddress} name={token.name} />
         </div>
       );
@@ -78,7 +70,7 @@ const columns: ColumnDef<TableDeposit, keyof TableDeposit>[] = [
     cell({ row }) {
       const decimals = row.getValue<Deposit["tokenTotals"]>("tokenTotals")
         ?.decimals as number;
-      return <>{formatUnits(row.getValue("amount"), decimals)}</>;
+      return <>{formatAmount(formatUnits(row.getValue("amount"), decimals))}</>;
     },
   },
   {
