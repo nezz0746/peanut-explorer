@@ -109,4 +109,12 @@ export function handleMessageEvent(event: MessageEventEvent): void {
 
 export function handleWithdrawEvent(event: WithdrawEventEvent): void {
   _saveWithdrawEvent(event);
+
+  let deposit = Deposit.load(event.params._index.toString());
+
+  if (deposit) {
+    deposit.claimed = true;
+    deposit.recipient = event.params._recipientAddress;
+    deposit.save();
+  }
 }
