@@ -1,4 +1,4 @@
-import { BigInt, Bytes, log } from "@graphprotocol/graph-ts";
+import { BigInt } from "@graphprotocol/graph-ts";
 import {
   DepositEvent as DepositEventEvent,
   MessageEvent as MessageEventEvent,
@@ -6,28 +6,12 @@ import {
   PeanutV4,
 } from "../generated/PeanutV4/PeanutV4";
 import { ERC20 } from "../generated/PeanutV4/ERC20";
-import {
-  DepositEvent,
-  MessageEvent,
-  WithdrawEvent,
-  Deposit,
-  DepositTotals,
-} from "../generated/schema";
+import { MessageEvent, Deposit, DepositTotals } from "../generated/schema";
+import { _saveDepositEvent } from "./handleDepositEvent";
+import { _saveWithdrawEvent } from "./handleWithdrawEvent";
 
 export function handleDepositEvent(event: DepositEventEvent): void {
-  let entity = new DepositEvent(
-    event.transaction.hash.concatI32(event.logIndex.toI32()),
-  );
-  entity._index = event.params._index;
-  entity._contractType = event.params._contractType;
-  entity._amount = event.params._amount;
-  entity._senderAddress = event.params._senderAddress;
-
-  entity.blockNumber = event.block.number;
-  entity.blockTimestamp = event.block.timestamp;
-  entity.transactionHash = event.transaction.hash;
-
-  entity.save();
+  _saveDepositEvent(event);
 
   let contract = PeanutV4.bind(event.address);
 
@@ -124,17 +108,5 @@ export function handleMessageEvent(event: MessageEventEvent): void {
 }
 
 export function handleWithdrawEvent(event: WithdrawEventEvent): void {
-  let entity = new WithdrawEvent(
-    event.transaction.hash.concatI32(event.logIndex.toI32()),
-  );
-  entity._index = event.params._index;
-  entity._contractType = event.params._contractType;
-  entity._amount = event.params._amount;
-  entity._recipientAddress = event.params._recipientAddress;
-
-  entity.blockNumber = event.block.number;
-  entity.blockTimestamp = event.block.timestamp;
-  entity.transactionHash = event.transaction.hash;
-
-  entity.save();
+  _saveWithdrawEvent(event);
 }
