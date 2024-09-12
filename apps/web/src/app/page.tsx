@@ -6,6 +6,13 @@ import {
 import DepositTotalsCard from "../components/DepositTotalsCard";
 import { PeanutAPI } from "../services/peanut-api";
 import DepositTable from "../components/DepositTable";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@repo/ui/components/ui/card";
 
 export default async function Home() {
   const { depositTotals_collection } = await new PeanutAPI().getTotals({
@@ -17,15 +24,25 @@ export default async function Home() {
   });
 
   return (
-    <div className="flex flex-col w-full justify-center p-4 gap-4">
+    <div className="flex flex-col md:flex-row w-full justify-center p-4 gap-4">
       <div className="flex flex-col gap-2">
-        <div className="gap-2 grid grid-cols-6">
-          {depositTotals_collection.map((deposit) => {
-            return <DepositTotalsCard {...deposit} />;
-          })}
-        </div>
+        <Card>
+          <CardHeader>
+            <CardTitle>Stats</CardTitle>
+            <CardDescription>
+              Overview of the top deposits by currency
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="gap-2 grid grid-cols-2">
+              {depositTotals_collection.map((deposit) => {
+                return <DepositTotalsCard {...deposit} />;
+              })}
+            </div>
+          </CardContent>
+        </Card>
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 flex-grow">
         <DepositTable />
       </div>
     </div>

@@ -12,7 +12,7 @@ const SearchBar = ({ onChange }: SearchBarProps) => {
       <Input
         type="search"
         placeholder="Search by sender, or token address"
-        className="rounded-lg bg-background pl-8 md:w-[300px] lg:w-[420px]"
+        className="rounded-lg bg-background pl-8 w-full"
         onChange={(e) => {
           onChange(e.target.value);
         }}

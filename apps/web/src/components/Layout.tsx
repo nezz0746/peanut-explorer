@@ -80,6 +80,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   height={100}
                   width={100}
                 />
+                <p className="text-3xl md:text-4xl tracking-tighter text-nowrap font-peanut">
+                  Peanut Explorer
+                </p>
               </Link>
               {links.map((link) => (
                 <Link href={link.href} className="hover:text-foreground">
@@ -89,6 +92,21 @@ export function Layout({ children }: { children: React.ReactNode }) {
             </nav>
           </SheetContent>
         </Sheet>
+        <Link
+          href="#"
+          className="flex md:hidden items-center gap-2 text-lg font-semibold"
+        >
+          <Image
+            className="w-8 h-8"
+            src={peanutman}
+            alt=""
+            height={100}
+            width={100}
+          />
+          <p className="text-3xl md:text-4xl tracking-tighter text-nowrap font-peanut">
+            Peanut Explorer
+          </p>
+        </Link>
         <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4 justify-end">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
