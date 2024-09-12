@@ -2,7 +2,6 @@
   "name": "@repo/subgraph",
   "license": "UNLICENSED",
   "scripts": {
-    "prepare": "graph codegen",
     "build": "graph build",
     "deploy": "graph deploy --studio peanut-base",
     "create-local": "graph create --node http://localhost:8020/ peanut-base",
