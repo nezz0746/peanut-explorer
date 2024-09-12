@@ -28,3 +28,7 @@ export const getExplorerLink = (
   if (!data) return "";
   return `${chain?.blockExplorers?.default?.url}/${path}/${data}`;
 };
+
+export const getTokenImageURL = (tokenAddress: string) => {
+  return `https://assets.smold.app/api/token/${constants.chain.id}/${tokenAddress}/logo-128.png`;
+};

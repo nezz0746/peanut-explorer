@@ -7,7 +7,6 @@ import {
   Deposit,
   Deposit_OrderBy,
   DepositsQuery,
-  DepositTotals,
   OrderDirection,
 } from "@repo/webkit";
 import { ColumnDef } from "@tanstack/react-table";
@@ -18,11 +17,14 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { formatUnits } from "viem";
 import { Badge } from "@repo/ui/components/ui/badge";
+import { useState } from "react";
+import SearchBar from "./SearchBar";
+import TokenLogo from "./TokenLogo";
 dayjs.extend(relativeTime);
 
 type TableDeposit = DepositsQuery["deposits"][0];
 
-const columns: ColumnDef<TableDeposit>[] = [
+const columns: ColumnDef<TableDeposit, keyof TableDeposit>[] = [
   {
     accessorKey: "id",
     header: "ID",
@@ -35,6 +37,7 @@ const columns: ColumnDef<TableDeposit>[] = [
       return (
         <Link
           href={getExplorerLink(sender, "address")}
+          target="_blank"
           className="underline hover:text-blue-400"
         >
           {truncateAddress(sender)}
@@ -60,7 +63,12 @@ const columns: ColumnDef<TableDeposit>[] = [
     cell({ row }) {
       const token = row.getValue<Deposit["tokenTotals"]>("tokenTotals");
 
-      return <p>{token.name}</p>;
+      return (
+        <div className="flex flex-row gap-2 items-center">
+          <p>{token.name}</p>
+          <TokenLogo tokenAddress={token.tokenAddress} name={token.name} />
+        </div>
+      );
     },
   },
 
@@ -89,11 +97,22 @@ const columns: ColumnDef<TableDeposit>[] = [
 ];
 
 const DepositTable = () => {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["depositTable"],
+  const [searchString, setSearchString] = useState<string | null>(null);
+
+  const { data } = useQuery({
+    queryKey: ["depositTable", searchString],
     queryFn: async () => {
       return new PeanutAPI().getDeposits({
-        where: {},
+        where: !searchString
+          ? {}
+          : {
+              or: [
+                {
+                  tokenAddress: searchString,
+                },
+                { senderAddress: searchString },
+              ],
+            },
         orderBy: Deposit_OrderBy.Timestamp,
         orderDirection: OrderDirection.Desc,
         subgraphError: _SubgraphErrorPolicy_.Allow,
@@ -101,8 +120,20 @@ const DepositTable = () => {
     },
   });
 
-  console.log(data);
-  return <DataTable columns={columns} data={data?.deposits || []} />;
+  return (
+    <div className="flex flex-col gap-4">
+      <SearchBar
+        onChange={(string) => {
+          console.log({ string });
+          setSearchString(string);
+        }}
+      />
+      <DataTable<TableDeposit, keyof TableDeposit>
+        columns={columns}
+        data={data?.deposits || []}
+      />
+    </div>
+  );
 };
 
 export default DepositTable;

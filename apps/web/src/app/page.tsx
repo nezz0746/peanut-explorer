@@ -17,7 +17,7 @@ export default async function Home() {
   });
 
   return (
-    <div className="flex flex-col w-full justify-center p-4 gap-8">
+    <div className="flex flex-col w-full justify-center p-4 gap-4">
       <div className="flex flex-col gap-2">
         <div className="gap-2 grid grid-cols-6">
           {depositTotals_collection.map((deposit) => {
