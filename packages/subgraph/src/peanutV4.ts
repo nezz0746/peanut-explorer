@@ -14,8 +14,6 @@ import {
   DepositTotals,
 } from "../generated/schema";
 
-let addressZero = "0x0000000000000000000000000000000000000000";
-
 export function handleDepositEvent(event: DepositEventEvent): void {
   let entity = new DepositEvent(
     event.transaction.hash.concatI32(event.logIndex.toI32()),
@@ -37,18 +35,13 @@ export function handleDepositEvent(event: DepositEventEvent): void {
 
   // If the deposit does not exist, create it
   if (deposit == null) {
-    log.info("Deposit does not exist", []);
-
     let contract_deposit = contract.getDeposit(event.params._index);
-
-    log.info("Creating deposit of amount:", [
-      contract_deposit.amount.toHexString(),
-    ]);
 
     let deposit = new Deposit(event.params._index.toString());
 
     deposit.amount = contract_deposit.amount;
     deposit.tokenAddress = contract_deposit.tokenAddress;
+    deposit.tokenTotals = contract_deposit.tokenAddress.toHexString();
     deposit.contractType = contract_deposit.contractType;
     deposit.claimed = contract_deposit.claimed;
     deposit.requiresMFA = contract_deposit.requiresMFA;
@@ -62,11 +55,15 @@ export function handleDepositEvent(event: DepositEventEvent): void {
     // if the deposit is an ERC20 or ETH
     if (contract_deposit.contractType == 0) {
       // Check if a DepositTotals entity exists with addresszero
-      let depositTotals = DepositTotals.load(addressZero);
+      let depositTotals = DepositTotals.load(
+        contract_deposit.tokenAddress.toHexString(),
+      );
 
       // If it does not exist, create it
       if (depositTotals == null) {
-        depositTotals = new DepositTotals(addressZero);
+        depositTotals = new DepositTotals(
+          contract_deposit.tokenAddress.toHexString(),
+        );
         depositTotals.tokenAddress = contract_deposit.tokenAddress;
         depositTotals.totalDeposited = contract_deposit.amount;
         depositTotals.name = "Ethereum";
@@ -93,9 +90,9 @@ export function handleDepositEvent(event: DepositEventEvent): void {
         depositTotals = new DepositTotals(
           contract_deposit.tokenAddress.toHexString(),
         );
-        let erc20 = ERC20.bind(contract_deposit.tokenAddress);
         depositTotals.tokenAddress = contract_deposit.tokenAddress;
         depositTotals.totalDeposited = contract_deposit.amount;
+        let erc20 = ERC20.bind(contract_deposit.tokenAddress);
         depositTotals.name = erc20.name();
         depositTotals.symbol = erc20.symbol();
         depositTotals.decimals = erc20.decimals();

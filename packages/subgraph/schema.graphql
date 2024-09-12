@@ -13,6 +13,7 @@ type Deposit @entity(immutable: false) {
   id: ID! # index
   amount: BigInt! # uint256
   tokenAddress: Bytes! # address
+  tokenTotals: DepositTotals!
   contractType: Int! # uint8
   claimed: Boolean!
   requiresMFA: Boolean!
