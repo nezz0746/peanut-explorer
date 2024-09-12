@@ -20,6 +20,7 @@ import SearchBar from "./SearchBar";
 import TokenLogo from "./TokenLogo";
 import SenderCell from "./SenderCell";
 import { formatAmount } from "../helpers";
+import { CheckIcon, LoaderIcon } from "lucide-react";
 dayjs.extend(relativeTime);
 
 type TableDeposit = DepositsQuery["deposits"][0];
@@ -76,6 +77,18 @@ const columns: ColumnDef<TableDeposit, keyof TableDeposit>[] = [
   {
     accessorKey: "claimed",
     header: "Claimed",
+    cell({ row }) {
+      const claimed = row.getValue<Deposit["claimed"]>("claimed");
+      return (
+        <>
+          {claimed ? (
+            <CheckIcon className="stroke-green-500" />
+          ) : (
+            <LoaderIcon />
+          )}
+        </>
+      );
+    },
   },
   {
     accessorKey: "timestamp",
