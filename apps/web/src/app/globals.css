@@ -1,3 +1,9 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@font-face {
+    font-family: "Peanut";
+    src: url("../../public/fonts/Peanut.ttf");
+}
+
+@font-face {
+    font-family: "PeanutFill";
+    src: url("../../public/fonts/Peanut Fill.ttf");
+}
