@@ -5,7 +5,7 @@ import { WagmiProvider } from "wagmi";
 import { wagmiConfig } from "../wagmi";
 import { ChainProvider } from "../context/ChainContext";
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
 const RootProvider = ({ children }: { children: React.ReactNode }) => {
   return (

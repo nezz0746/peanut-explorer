@@ -28,6 +28,7 @@ import {
 } from "@repo/ui/components/ui/select";
 import { constants, SupportedChainsIds } from "@repo/common";
 import { useExplorerChain } from "../context/ChainContext";
+import { getChainImageURL } from "../helpers";
 
 export const description =
   "An application shell with a header and main content area. The header has a navbar, a search input and and a user nav dropdown. The user nav is toggled by a button with an avatar image. The main content area is divided into two rows. The first row has a grid of cards with statistics. The second row has a grid of cards with a table of recent transactions and a list of recent sales.";
@@ -127,6 +128,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </p>
         </Link>
         <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4 justify-end">
+          <Image
+            src={getChainImageURL(explorerChainId.toString())}
+            height={100}
+            width={100}
+            alt=""
+            className="w-6 h-6"
+          />
           <Select
             onValueChange={(value) => {
               setChainId(parseInt(value) as SupportedChainsIds);
@@ -140,7 +148,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <SelectLabel>Networks</SelectLabel>
                 {Object.keys(constants.subgraphURLs).map((chainId) => (
                   <SelectItem value={chainId}>
-                    {networkNames[parseInt(chainId) as SupportedChainsIds]}
+                    <div className="flex flex-row items-center justify-start gap-2">
+                      <Image
+                        src={getChainImageURL(chainId)}
+                        height={100}
+                        width={100}
+                        alt=""
+                        className="w-6 h-6"
+                      />
+                      {networkNames[parseInt(chainId) as SupportedChainsIds]}
+                    </div>
                   </SelectItem>
                 ))}
               </SelectGroup>

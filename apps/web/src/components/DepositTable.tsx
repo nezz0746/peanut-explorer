@@ -60,7 +60,6 @@ const columns: ColumnDef<TableDeposit, keyof TableDeposit>[] = [
       return (
         <div className="flex flex-row gap-2 items-center">
           <p>{token.symbol}</p>
-          <TokenLogo tokenAddress={token.tokenAddress} name={token.name} />
         </div>
       );
     },

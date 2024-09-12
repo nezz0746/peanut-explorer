@@ -30,5 +30,8 @@ export const getExplorerLink = (
 };
 
 export const getTokenImageURL = (tokenAddress: string, chainId: string) => {
-  return `https://assets.smold.app/api/token/${chainId}/${tokenAddress}/logo-128.png`;
+  return `https://assets.smold.app/api/tokens/${chainId}/${tokenAddress}/logo.svg`;
+};
+export const getChainImageURL = (chainId: string) => {
+  return `https://assets.smold.app/api/chain/${chainId}/logo-128.png`;
 };

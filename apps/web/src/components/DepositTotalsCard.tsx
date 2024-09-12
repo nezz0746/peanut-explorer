@@ -26,7 +26,6 @@ export default function DepositTotalsCard(
         </CardDescription>
         <CardTitle className="text-2xl flex flex-row items-center gap-2">
           {formatAmount(readableTotalDeposited)}
-          <TokenLogo tokenAddress={props.tokenAddress} name={props.name} />
         </CardTitle>
         <CardDescription>{props.totalDeposists} Deposits</CardDescription>
       </CardHeader>
