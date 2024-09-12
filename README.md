@@ -1,1 +1,1 @@
-# Starter
+# Peanut Explorer

@@ -6,11 +6,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: PeanutV4
-    network: base
+    network: matic
     source:
-      address: "0xC28551dE08997e4c013F50f6E566a0F31Fc46A61" # V4.3
+      address: "0x5746f5F68705AE7a6f3Ce8D2F2A444FFa65411a4" # V4.3
       abi: PeanutV4
-      startBlock: 10222663
+      startBlock: 53186282
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7

@@ -3,15 +3,14 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "graph build",
-    "deploy": "graph deploy --studio peanut-base",
-    "create-local": "graph create --node http://localhost:8020/ peanut-base",
-    "remove-local": "graph remove --node http://localhost:8020/ peanut-base",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 peanut-base",
     "test": "graph test"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.81.0",
-    "@graphprotocol/graph-ts": "0.35.1"
+    "@graphprotocol/graph-ts": "0.35.1",
+    "mustache": "^4.2.0"
   },
-  "devDependencies": { "matchstick-as": "0.5.0" }
+  "devDependencies": {
+    "matchstick-as": "0.5.0"
+  }
 }
