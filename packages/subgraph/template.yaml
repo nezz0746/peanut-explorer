@@ -11,6 +11,12 @@ dataSources:
       chainId:
         type: Int
         data: {{ chainId }}
+      nativeAssetName:
+        type: String
+        data: {{ nativeAssetName }}
+      nativeAssetSymbol:
+        type: String
+        data: {{ nativeAssetSymbol }}
     source:
       address: "{{ contractAddress }}" # V4.3
       abi: PeanutV4

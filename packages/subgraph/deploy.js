@@ -19,6 +19,8 @@ const main = async () => {
       network: "base",
       graphName: "peanut-base",
       chainId: 8453,
+      nativeAssetName: "Ethereum",
+      nativeAssetSymbol: "ETH",
     },
     {
       startBlock: 115817906,
@@ -26,6 +28,8 @@ const main = async () => {
       network: "optimism",
       graphName: "peanut-opt",
       chainId: 10,
+      nativeAssetName: "Ethereum",
+      nativeAssetSymbol: "ETH",
     },
     {
       startBlock: 178053936,
@@ -33,6 +37,8 @@ const main = async () => {
       network: "arbitrum-one",
       graphName: "peanut-arb",
       chainId: 42161,
+      nativeAssetName: "Ethereum",
+      nativeAssetSymbol: "ETH",
     },
     {
       startBlock: 53186282,
@@ -40,6 +46,8 @@ const main = async () => {
       network: "matic",
       graphName: "peanut-polygon",
       chainId: 137,
+      nativeAssetName: "Matic",
+      nativeAssetSymbol: "MATIC",
     },
   ];
 

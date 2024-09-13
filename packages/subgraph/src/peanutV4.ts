@@ -52,8 +52,10 @@ export function handleDepositEvent(event: DepositEventEvent): void {
         depositTotals.chainId = dataSource.context().getI32("chainId");
         depositTotals.tokenAddress = contract_deposit.tokenAddress;
         depositTotals.totalDeposited = contract_deposit.amount;
-        depositTotals.name = "Ethereum";
-        depositTotals.symbol = "ETH";
+        depositTotals.name = dataSource.context().getString("nativeAssetName");
+        depositTotals.symbol = dataSource
+          .context()
+          .getString("nativeAssetSymbol");
         depositTotals.decimals = 18;
         depositTotals.totalDeposists = BigInt.fromI32(1);
         depositTotals.totalClaimed = BigInt.fromI32(0);
