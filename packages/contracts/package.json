@@ -1,5 +1,5 @@
 {
-  "name": "@repo/contracts",
+  "name": "@peanut/contracts",
   "version": "0.0.0",
   "description": "Contracts for the repo",
   "type": "module",

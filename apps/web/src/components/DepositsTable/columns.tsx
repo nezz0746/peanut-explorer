@@ -1,7 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import SenderCell from "../SenderCell";
-import { Deposit, DepositsQuery } from "@repo/webkit";
-import { Badge } from "@repo/ui/components/ui/badge";
+import { Deposit, DepositsQuery } from "@peanut/webkit";
+import { Badge } from "@peanut/ui/components/ui/badge";
 import { formatAmount, getChainImageURL } from "~/src/helpers";
 import { formatUnits } from "viem";
 import Image from "next/image";

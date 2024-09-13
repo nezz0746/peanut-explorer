@@ -6,7 +6,7 @@ import {
   _SubgraphErrorPolicy_,
   Deposit_OrderBy,
   OrderDirection,
-} from "@repo/webkit";
+} from "@peanut/webkit";
 import { DataTable } from "../DataTable";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";

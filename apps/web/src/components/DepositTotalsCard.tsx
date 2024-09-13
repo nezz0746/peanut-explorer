@@ -5,8 +5,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@repo/ui/components/ui/card";
-import { DepositTotals_CollectionQuery } from "@repo/webkit";
+} from "@peanut/ui/components/ui/card";
+import { DepositTotals_CollectionQuery } from "@peanut/webkit";
 import { formatUnits } from "viem";
 import { formatAmount } from "../helpers";
 

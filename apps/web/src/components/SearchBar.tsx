@@ -1,4 +1,4 @@
-import { Input } from "@repo/ui/components/ui/input";
+import { Input } from "@peanut/ui/components/ui/input";
 import { Search } from "lucide-react";
 
 type SearchBarProps = {

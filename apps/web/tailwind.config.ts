@@ -1,4 +1,4 @@
-import conf from "@repo/ui/tailwind.config";
+import conf from "@peanut/ui/tailwind.config";
 import type { Config } from "tailwindcss";
 import { merge } from "lodash";
 

@@ -1,4 +1,4 @@
-import "@repo/ui/globals.css";
+import "@peanut/ui/globals.css";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";

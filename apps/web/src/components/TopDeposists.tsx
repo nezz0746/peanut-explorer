@@ -4,7 +4,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@repo/ui/components/ui/card";
+} from "@peanut/ui/components/ui/card";
 import DepositTotalsCard from "./DepositTotalsCard";
 import { useExplorerChain } from "../context/ChainContext";
 import { useQuery } from "@tanstack/react-query";
@@ -13,7 +13,7 @@ import {
   _SubgraphErrorPolicy_,
   DepositTotals_OrderBy,
   OrderDirection,
-} from "@repo/webkit";
+} from "@peanut/webkit";
 
 const TopDeposists = () => {
   const { chainId } = useExplorerChain();

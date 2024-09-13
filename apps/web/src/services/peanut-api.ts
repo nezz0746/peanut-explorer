@@ -3,8 +3,11 @@ import {
   DepositsQueryVariables,
   Sdk,
   getSdk as getAPI,
-} from "@repo/webkit";
-import { constants, SupportedChainsIds } from "@repo/common";
+} from "@peanut/webkit";
+import {
+  constants,
+  SupportedChainsIds,
+} from "../../../../packages/peanute-common/dist";
 import { GraphQLClient } from "graphql-request";
 
 export class PeanutAPI {

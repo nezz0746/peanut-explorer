@@ -1,4 +1,4 @@
-import { constants } from "@repo/common";
+import { constants } from "../../../packages/peanute-common/dist";
 import { Address, Chain } from "viem";
 
 export const formatAmount = (amount: string) => {

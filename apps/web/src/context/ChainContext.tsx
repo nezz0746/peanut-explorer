@@ -1,4 +1,4 @@
-import { SupportedChainsIds } from "@repo/common";
+import { SupportedChainsIds } from "../../../../packages/peanute-common/dist";
 import { createContext, useContext, useState } from "react";
 import { base } from "viem/chains";
 

@@ -9,11 +9,11 @@
     "prepare": "dotenv -- turbo prepare",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "ui:add": "pnpm --filter @repo/ui ui:add"
+    "ui:add": "pnpm --filter @peanut/ui ui:add"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
+    "@peanut/eslint-config": "workspace:*",
+    "@peanut/typescript-config": "workspace:*",
     "dotenv-cli": "^7.4.2",
     "prettier": "^3.3.2",
     "turbo": "2.0.6"

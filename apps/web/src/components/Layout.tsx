@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { CircleUser, Menu } from "lucide-react";
-import { Button } from "@repo/ui/components/ui/button";
+import { Button } from "@peanut/ui/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,12 +10,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@repo/ui/components/ui/dropdown-menu";
+} from "@peanut/ui/components/ui/dropdown-menu";
 import {
   Sheet,
   SheetContent,
   SheetTrigger,
-} from "@repo/ui/components/ui/sheet";
+} from "@peanut/ui/components/ui/sheet";
 import Image from "next/image";
 import peanutman from "../../public/peanutman.svg";
 import {
@@ -25,8 +25,11 @@ import {
   SelectItem,
   SelectLabel,
   SelectTrigger,
-} from "@repo/ui/components/ui/select";
-import { constants, SupportedChainsIds } from "@repo/common";
+} from "@peanut/ui/components/ui/select";
+import {
+  constants,
+  SupportedChainsIds,
+} from "../../../../packages/peanute-common/dist";
 import { useExplorerChain } from "../context/ChainContext";
 import { getChainImageURL } from "../helpers";
 import { HTMLAttributeAnchorTarget } from "react";

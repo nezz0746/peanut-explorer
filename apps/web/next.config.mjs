@@ -1,14 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ["@repo/ui"],
+  transpilePackages: ["@peanut/ui"],
   images: {
     remotePatterns: [
       {
         hostname: "assets.smold.app",
-        "protocol": "https",
-      }
-    ]
-  }
+        protocol: "https",
+      },
+    ],
+  },
 };
 
 export default nextConfig;
