@@ -29,11 +29,10 @@ import {
 import { constants, SupportedChainsIds } from "@repo/common";
 import { useExplorerChain } from "../context/ChainContext";
 import { getChainImageURL } from "../helpers";
+import { HTMLAttributeAnchorTarget } from "react";
 
 export const description =
   "An application shell with a header and main content area. The header has a navbar, a search input and and a user nav dropdown. The user nav is toggled by a button with an avatar image. The main content area is divided into two rows. The first row has a grid of cards with statistics. The second row has a grid of cards with a table of recent transactions and a list of recent sales.";
-
-const links: any[] = [];
 
 const networkNames: Record<SupportedChainsIds, string> = {
   "10": "Optimism",
@@ -44,6 +43,19 @@ const networkNames: Record<SupportedChainsIds, string> = {
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const { setChainId, chainId: explorerChainId } = useExplorerChain();
+
+  const links: {
+    name: string;
+    href: string;
+    target?: HTMLAttributeAnchorTarget;
+  }[] = [
+    {
+      name: "API Playground",
+      href: constants.subgraphURLs[explorerChainId],
+      target: "_blank",
+    },
+  ];
+
   return (
     <div className="flex min-h-screen w-full flex-col">
       <header className="sticky top-0 flex bg-white z-10 h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
@@ -70,7 +82,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
           {links.map((link) => (
             <Link
               href={link.href}
-              className="text-foreground transition-colors hover:text-foreground"
+              target={link.target ?? "_self"}
+              className="text-foreground transition-colors hover:text-foreground text-nowrap"
             >
               {link.name}
             </Link>
@@ -105,7 +118,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 </p>
               </Link>
               {links.map((link) => (
-                <Link href={link.href} className="hover:text-foreground">
+                <Link
+                  href={link.href}
+                  target={link.target ?? "_self"}
+                  className="hover:text-foreground text-nowrap"
+                >
                   {link.name}
                 </Link>
               ))}
@@ -123,9 +140,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
             height={100}
             width={100}
           />
-          <p className="text-3xl md:text-4xl tracking-tighter text-nowrap font-peanut">
-            Peanut Explorer
-          </p>
         </Link>
         <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4 justify-end">
           <Image

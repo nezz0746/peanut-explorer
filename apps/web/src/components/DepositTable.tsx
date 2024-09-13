@@ -17,9 +17,9 @@ import { formatUnits } from "viem";
 import { Badge } from "@repo/ui/components/ui/badge";
 import { useState } from "react";
 import SearchBar from "./SearchBar";
-import TokenLogo from "./TokenLogo";
+import Image from "next/image";
 import SenderCell from "./SenderCell";
-import { formatAmount } from "../helpers";
+import { formatAmount, getChainImageURL } from "../helpers";
 import { CheckIcon, LoaderIcon } from "lucide-react";
 import { useExplorerChain } from "../context/ChainContext";
 dayjs.extend(relativeTime);
@@ -45,7 +45,7 @@ const columns: ColumnDef<TableDeposit, keyof TableDeposit>[] = [
     cell({ row }) {
       const type = row.getValue<Deposit["contractType"]>("contractType");
       if (type === 0) {
-        return <Badge className="bg-purple-600">ETH</Badge>;
+        return <Badge className="bg-purple-600">NATIVE</Badge>;
       } else if (type === 1) {
         return <Badge className="bg-blue-600">ERC20</Badge>;
       }
@@ -87,6 +87,22 @@ const columns: ColumnDef<TableDeposit, keyof TableDeposit>[] = [
             <LoaderIcon />
           )}
         </>
+      );
+    },
+  },
+  {
+    accessorKey: "chainId",
+    header: "Network",
+    cell({ row }) {
+      const chainId = row.getValue<Deposit["chainId"]>("chainId");
+      return (
+        <Image
+          src={getChainImageURL(chainId.toString())}
+          height={100}
+          width={100}
+          className="w-6 h-6"
+          alt=""
+        />
       );
     },
   },

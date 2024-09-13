@@ -9,7 +9,6 @@ import {
 import { DepositTotals_CollectionQuery } from "@repo/webkit";
 import { formatUnits } from "viem";
 import { formatAmount } from "../helpers";
-import TokenLogo from "./TokenLogo";
 
 export default function DepositTotalsCard(
   props: DepositTotals_CollectionQuery["depositTotals_collection"][0],
