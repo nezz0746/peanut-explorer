@@ -1,32 +1,16 @@
-"use client";
-
-import { useQuery } from "@tanstack/react-query";
-import { PeanutAPI } from "../services/peanut-api";
-import {
-  _SubgraphErrorPolicy_,
-  Deposit,
-  Deposit_OrderBy,
-  DepositsQuery,
-  OrderDirection,
-} from "@repo/webkit";
 import { ColumnDef } from "@tanstack/react-table";
-import { DataTable } from "./DataTable";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-import { formatUnits } from "viem";
+import SenderCell from "../SenderCell";
+import { Deposit, DepositsQuery } from "@repo/webkit";
 import { Badge } from "@repo/ui/components/ui/badge";
-import { useState } from "react";
-import SearchBar from "./SearchBar";
+import { formatAmount, getChainImageURL } from "~/src/helpers";
+import { formatUnits } from "viem";
 import Image from "next/image";
-import SenderCell from "./SenderCell";
-import { formatAmount, getChainImageURL } from "../helpers";
 import { CheckIcon, LoaderIcon } from "lucide-react";
-import { useExplorerChain } from "../context/ChainContext";
-dayjs.extend(relativeTime);
+import dayjs from "dayjs";
 
-type TableDeposit = DepositsQuery["deposits"][0];
+export type TableDeposit = DepositsQuery["deposits"][0];
 
-const columns: ColumnDef<TableDeposit, keyof TableDeposit>[] = [
+export const columns: ColumnDef<TableDeposit, keyof TableDeposit>[] = [
   {
     accessorKey: "id",
     header: "ID",
@@ -116,46 +100,3 @@ const columns: ColumnDef<TableDeposit, keyof TableDeposit>[] = [
     },
   },
 ];
-
-const DepositTable = () => {
-  const [searchString, setSearchString] = useState<string | null>(null);
-  const { chainId } = useExplorerChain();
-
-  const { data } = useQuery({
-    queryKey: ["depositTable", searchString, chainId],
-    queryFn: async () => {
-      return new PeanutAPI(chainId).getDeposits({
-        where: !searchString
-          ? {}
-          : {
-              or: [
-                {
-                  tokenAddress: searchString,
-                },
-                { senderAddress: searchString },
-              ],
-            },
-        orderBy: Deposit_OrderBy.Timestamp,
-        orderDirection: OrderDirection.Desc,
-        subgraphError: _SubgraphErrorPolicy_.Allow,
-      });
-    },
-  });
-
-  return (
-    <div className="flex flex-col gap-4">
-      <SearchBar
-        onChange={(string) => {
-          console.log({ string });
-          setSearchString(string);
-        }}
-      />
-      <DataTable<TableDeposit, keyof TableDeposit>
-        columns={columns}
-        data={data?.deposits || []}
-      />
-    </div>
-  );
-};
-
-export default DepositTable;
