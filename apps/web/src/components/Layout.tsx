@@ -42,6 +42,7 @@ const networkNames: Record<SupportedChainsIds, string> = {
   "137": "Polygon",
   "42161": "Arbitrum",
   "8453": "Base",
+  "324": "ZKsync Era",
 };
 
 export function Layout({ children }: { children: React.ReactNode }) {

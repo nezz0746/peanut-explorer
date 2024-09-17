@@ -1,4 +1,5 @@
 const newVersion = process.argv[2];
+const chainId = process.argv[3];
 
 // Check if argument is present, throw error if not
 if (!newVersion) {
@@ -7,12 +8,11 @@ if (!newVersion) {
 
 const Mustache = require("mustache");
 const fs = require("fs/promises");
-const { exec, execSync } = require("child_process");
-const { start } = require("repl");
+const { execSync } = require("child_process");
 
 const main = async () => {
   // Loop over an array and deploy a subgraph for each network
-  const networks = [
+  let networks = [
     {
       startBlock: 10222663,
       contractAddress: "0xC28551dE08997e4c013F50f6E566a0F31Fc46A61",
@@ -49,7 +49,22 @@ const main = async () => {
       nativeAssetName: "Matic",
       nativeAssetSymbol: "MATIC",
     },
+    {
+      startBlock: 39786136,
+      contractAddress: "0x155D491e76830Dbd8f738Cb2Ad873D2caF69DA42",
+      network: "zksync-era",
+      graphName: "peanut-zksync-era",
+      chainId: 324,
+      nativeAssetName: "Ethereum",
+      nativeAssetSymbol: "ETH",
+    },
   ];
+
+  if (chainId) {
+    networks = networks.filter(
+      (network) => network.chainId === parseInt(chainId),
+    );
+  }
 
   for (const network of networks) {
     const confiTemplate = await fs.readFile("template.yaml", "utf8");
