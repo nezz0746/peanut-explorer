@@ -1,17 +1,17 @@
 import { SupportedChainsIds } from "../../../../packages/peanute-common/dist";
 import { createContext, useContext, useState } from "react";
-import { base } from "viem/chains";
+import { defaultChain } from "../env";
 
 const ChainContext = createContext<{
   chainId: SupportedChainsIds;
   setChainId: (chain: SupportedChainsIds) => void;
 }>({
-  chainId: base.id,
+  chainId: defaultChain.id,
   setChainId: () => {},
 });
 
 export const ChainProvider = ({ children }: { children: React.ReactNode }) => {
-  const [chainId, setChainId] = useState<SupportedChainsIds>(base.id);
+  const [chainId, setChainId] = useState<SupportedChainsIds>(defaultChain.id);
 
   return (
     <ChainContext.Provider value={{ chainId, setChainId }}>
