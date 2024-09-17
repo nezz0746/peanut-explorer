@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card,
   CardContent,
@@ -7,28 +9,13 @@ import {
 } from "@peanut/ui/components/ui/card";
 import DepositTotalsCard from "./DepositTotalsCard";
 import { useExplorerChain } from "../context/ChainContext";
-import { useQuery } from "@tanstack/react-query";
-import { PeanutAPI } from "../services/peanut-api";
-import {
-  _SubgraphErrorPolicy_,
-  DepositTotals_OrderBy,
-  OrderDirection,
-} from "@peanut/webkit";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { _SubgraphErrorPolicy_ } from "@peanut/webkit";
+import { getTopDepositsQueryOptions } from "../query";
 
 const TopDeposists = () => {
   const { chainId } = useExplorerChain();
-  const { data } = useQuery({
-    queryKey: ["depositTotals", chainId],
-    queryFn: async () => {
-      return new PeanutAPI(chainId).getTotals({
-        where: {},
-        first: 5,
-        orderBy: DepositTotals_OrderBy.TotalDeposists,
-        orderDirection: OrderDirection.Desc,
-        subgraphError: _SubgraphErrorPolicy_.Allow,
-      });
-    },
-  });
+  const { data } = useSuspenseQuery(getTopDepositsQueryOptions(chainId));
 
   return (
     <Card>

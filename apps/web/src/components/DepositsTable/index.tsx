@@ -1,12 +1,7 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { PeanutAPI } from "../../services/peanut-api";
-import {
-  _SubgraphErrorPolicy_,
-  Deposit_OrderBy,
-  OrderDirection,
-} from "@peanut/webkit";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { _SubgraphErrorPolicy_ } from "@peanut/webkit";
 import { DataTable } from "../DataTable";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -14,32 +9,16 @@ import { useState } from "react";
 import SearchBar from "../SearchBar";
 import { useExplorerChain } from "../../context/ChainContext";
 import { columns, TableDeposit } from "./columns";
+import { getDepositsQueryOptions } from "~/src/query";
 dayjs.extend(relativeTime);
 
 const DepositTable = () => {
   const [searchString, setSearchString] = useState<string | null>(null);
   const { chainId } = useExplorerChain();
 
-  const { data } = useQuery({
-    queryKey: ["depositTable", searchString, chainId],
-    queryFn: async () => {
-      return new PeanutAPI(chainId).getDeposits({
-        where: !searchString
-          ? {}
-          : {
-              or: [
-                {
-                  tokenAddress: searchString,
-                },
-                { senderAddress: searchString },
-              ],
-            },
-        orderBy: Deposit_OrderBy.Timestamp,
-        orderDirection: OrderDirection.Desc,
-        subgraphError: _SubgraphErrorPolicy_.Allow,
-      });
-    },
-  });
+  const { data } = useSuspenseQuery(
+    getDepositsQueryOptions({ chainId, searchString }),
+  );
 
   return (
     <div className="flex flex-col gap-4">
