@@ -16,7 +16,9 @@ function makeQueryClient() {
   return new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 60 * 1000,
+        staleTime: 0,
+        refetchInterval: 5 * 60 * 1000,
+        refetchIntervalInBackground: true,
       },
       dehydrate: {
         // include pending queries in dehydration
@@ -60,9 +62,17 @@ export const getTopDepositsQueryOptions = (chainId: SupportedChainsIds) => ({
 export const getDepositsQueryOptions = ({
   chainId,
   searchString,
+  sort = {
+    by: Deposit_OrderBy.Timestamp,
+    direction: OrderDirection.Desc,
+  },
 }: {
   chainId: SupportedChainsIds;
   searchString: string | null;
+  sort?: {
+    by: Deposit_OrderBy;
+    direction: OrderDirection;
+  };
 }) => ({
   queryKey: ["depositTable", searchString, chainId],
   queryFn: async () => {
@@ -77,8 +87,8 @@ export const getDepositsQueryOptions = ({
               { senderAddress: searchString },
             ],
           },
-      orderBy: Deposit_OrderBy.Timestamp,
-      orderDirection: OrderDirection.Desc,
+      orderBy: sort.by,
+      orderDirection: sort.direction,
       subgraphError: _SubgraphErrorPolicy_.Allow,
     });
   },
