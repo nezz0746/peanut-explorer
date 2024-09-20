@@ -1,55 +1,63 @@
 "use client";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
-import {
-  _SubgraphErrorPolicy_,
-  Deposit_OrderBy,
-  OrderDirection,
-} from "@peanut/webkit";
 import { DataTable } from "../DataTable";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { useState } from "react";
 import SearchBar from "../SearchBar";
 import { useExplorerChain } from "../../context/ChainContext";
 import { columns, TableDeposit } from "./columns";
 import { getDepositsQueryOptions } from "~/src/query";
+import { useDepositsTableFilters } from "~/src/context/TableFiltersContext";
+import {
+  MultiSelect,
+  MultiSelectRef,
+} from "@peanut/ui/components/ui/multi-select";
+import { useEffect, useRef } from "react";
 dayjs.extend(relativeTime);
 
 const DepositTable = () => {
-  const [searchString, setSearchString] = useState<string | null>(null);
+  const { search, filters, tokenOptions, setTokens } =
+    useDepositsTableFilters();
   const { chainId } = useExplorerChain();
 
   const { data } = useSuspenseQuery(
     getDepositsQueryOptions({
       chainId,
-      filters: {
-        where: !searchString
-          ? {}
-          : {
-              or: [
-                {
-                  senderAddress: searchString,
-                },
-                {
-                  tokenAddress: searchString,
-                },
-              ],
-            },
-        orderBy: Deposit_OrderBy.Timestamp,
-        orderDirection: OrderDirection.Desc,
-        subgraphError: _SubgraphErrorPolicy_.Allow,
-      },
+      filters,
     }),
   );
+  const ref = useRef<MultiSelectRef>(null);
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.clear(() => {
+        setTokens([]);
+      });
+    }
+  }, [chainId]);
 
   return (
     <div className="flex flex-col gap-4">
-      <SearchBar
-        onChange={(string) => {
-          setSearchString(string);
-        }}
-      />
+      <div className="flex flex-row gap-2">
+        <SearchBar
+          onChange={(searchString) => {
+            search(searchString);
+          }}
+        />
+        <MultiSelect
+          ref={ref}
+          className="flex bg-white bg-opacity-85 hover:bg-white"
+          options={tokenOptions}
+          onValueChange={(value) => {
+            setTokens(value);
+          }}
+          placeholder="Select Tokens"
+          variant="peanut"
+          animation={2}
+          maxCount={3}
+        />
+      </div>
       <DataTable<TableDeposit, keyof TableDeposit>
         columns={columns}
         data={data?.deposits || []}

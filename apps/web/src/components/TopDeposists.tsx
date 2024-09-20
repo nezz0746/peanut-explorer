@@ -18,7 +18,7 @@ const TopDeposists = () => {
   const { data } = useSuspenseQuery(getTopDepositsQueryOptions(chainId));
 
   return (
-    <Card>
+    <Card className="bg-white bg-opacity-85">
       <CardHeader>
         <CardTitle>Stats</CardTitle>
         <CardDescription>
@@ -28,7 +28,7 @@ const TopDeposists = () => {
       <CardContent>
         <div className="gap-2 grid grid-cols-2 md:grid-cols-6">
           {data?.depositTotals_collection.map((deposit) => {
-            return <DepositTotalsCard {...deposit} />;
+            return <DepositTotalsCard key={deposit.id} {...deposit} />;
           })}
         </div>
       </CardContent>
