@@ -10,6 +10,12 @@ export default merge(
           peanut: "Peanut, sans-serif",
           "peanut-fill": "PeanutFill, sans-serif",
         },
+        animation: {
+          "slow-spin": "spin 80s linear infinite",
+        },
+        backdropBlur: {
+          "3xl": "64px",
+        },
       },
     },
   } as Partial<Config>,

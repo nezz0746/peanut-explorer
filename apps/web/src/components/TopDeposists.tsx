@@ -18,7 +18,7 @@ const TopDeposists = () => {
   const { data } = useSuspenseQuery(getTopDepositsQueryOptions(chainId));
 
   return (
-    <Card>
+    <Card className="bg-white bg-opacity-85">
       <CardHeader>
         <CardTitle>Stats</CardTitle>
         <CardDescription>

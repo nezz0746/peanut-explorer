@@ -9,12 +9,15 @@ import { useExplorerChain } from "../../context/ChainContext";
 import { columns, TableDeposit } from "./columns";
 import { getDepositsQueryOptions } from "~/src/query";
 import { useDepositsTableFilters } from "~/src/context/TableFiltersContext";
-import { MultiSelect, MultiSelectRef } from "@peanut/ui/components/ui/multi-select";
+import {
+  MultiSelect,
+  MultiSelectRef,
+} from "@peanut/ui/components/ui/multi-select";
 import { useEffect, useRef } from "react";
 dayjs.extend(relativeTime);
 
 const DepositTable = () => {
-  const { search, filters, tokenOptions, selectedTokens, setSelectedTokens } =
+  const { search, filters, tokenOptions, setTokens } =
     useDepositsTableFilters();
   const { chainId } = useExplorerChain();
 
@@ -28,7 +31,9 @@ const DepositTable = () => {
 
   useEffect(() => {
     if (ref.current) {
-      ref.current.clear();
+      ref.current.clear(() => {
+        setTokens([]);
+      });
     }
   }, [chainId]);
 
@@ -42,14 +47,13 @@ const DepositTable = () => {
         />
         <MultiSelect
           ref={ref}
-          className="flex"
+          className="flex bg-white bg-opacity-85 hover:bg-white"
           options={tokenOptions}
           onValueChange={(value) => {
-            setSelectedTokens(value);
+            setTokens(value);
           }}
           placeholder="Select Tokens"
-          value={selectedTokens}
-          variant="secondary"
+          variant="peanut"
           animation={2}
           maxCount={3}
         />

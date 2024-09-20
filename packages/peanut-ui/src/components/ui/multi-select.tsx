@@ -31,15 +31,15 @@ import {
 
 // Define the ref type
 export interface MultiSelectRef extends HTMLButtonElement {
-  clear: () => void;
-};
+  clear: (callback?: () => void) => void;
+}
 
 /**
  * Variants for the multi-select component to handle different styles.
  * Uses class-variance-authority (cva) to define different styles based on "variant" prop.
  */
 const multiSelectVariants = cva(
-  "m-1 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300",
+  "m-1 transition rounded-sm ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300",
   {
     variants: {
       variant: {
@@ -50,6 +50,7 @@ const multiSelectVariants = cva(
         destructive:
           "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
         inverted: "inverted",
+        peanut: "bg-[#F2EC66] bg-opacity-95 text-black hover:bg-[#F2EC66]",
       },
     },
     defaultVariants: {
@@ -124,10 +125,7 @@ export interface MultiSelectProps
   className?: string;
 }
 
-export const MultiSelect = React.forwardRef<
-  MultiSelectRef,
-  MultiSelectProps
->(
+export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
   (
     {
       options,
@@ -197,8 +195,9 @@ export const MultiSelect = React.forwardRef<
 
     // @ts-ignore
     React.useImperativeHandle(ref, () => ({
-      clear: () => {
+      clear: (callback) => {
         handleClear();
+        callback?.();
       },
     }));
 

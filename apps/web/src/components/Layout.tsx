@@ -33,6 +33,7 @@ import {
 import { useExplorerChain } from "../context/ChainContext";
 import { getChainImageURL } from "../helpers";
 import { HTMLAttributeAnchorTarget } from "react";
+import BlurryBackground from './BlurryBackground';
 
 export const description =
   "An application shell with a header and main content area. The header has a navbar, a search input and and a user nav dropdown. The user nav is toggled by a button with an avatar image. The main content area is divided into two rows. The first row has a grid of cards with statistics. The second row has a grid of cards with a table of recent transactions and a list of recent sales.";
@@ -62,7 +63,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex min-h-screen w-full flex-col">
-      <header className="sticky top-0 flex bg-white z-10 h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
+      <BlurryBackground />
+      <header className="sticky top-0 flex bg-white/70 z-10 h-16 items-center gap-4 border-b bg-background/70 backdrop-blur-md px-4 md:px-6">
         <nav className="hidden flex-col  gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
           <div className="flex flex-row items-center gap-2">
             <Link

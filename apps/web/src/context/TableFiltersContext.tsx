@@ -23,14 +23,12 @@ const DepositsTableFilterContext = createContext<{
   filters: DepositsQueryVariables;
   search: (searchString: string) => void;
   tokenOptions: MultiSelectProps["options"];
-  selectedTokens: MultiSelectProps["value"];
-  setSelectedTokens: (tokens: MultiSelectProps["value"]) => void;
+  setTokens: (tokens: string[]) => void;
 }>({
   filters: defaultDepositsTableFilters,
   search: () => {},
   tokenOptions: [],
-  selectedTokens: [],
-  setSelectedTokens: () => {},
+  setTokens: () => {},
 });
 
 export const DepositsTableFiltersProvider = ({
@@ -42,9 +40,6 @@ export const DepositsTableFiltersProvider = ({
   const [filters, setFilters] = useState<DepositsQueryVariables>(
     defaultDepositsTableFilters,
   );
-  const [selectedTokens, setSelectedTokens] = useState<
-    MultiSelectProps["value"]
-  >([]);
 
   const { data: tokens } = useQuery({
     queryKey: ["tokens", chainId],
@@ -52,12 +47,6 @@ export const DepositsTableFiltersProvider = ({
       return new PeanutAPI(chainId).getTokenOptions();
     },
   });
-
-  useEffect(() => {
-    console.log("Chain changed");
-    // Clear selected tokens when chain changes
-    setSelectedTokens([]);
-  }, [chainId]);
 
   /**
    * NOTE: Unoptimal, improve by debouncing & immer or similar
@@ -73,14 +62,28 @@ export const DepositsTableFiltersProvider = ({
     });
   };
 
+  const setTokens = (tokens: string[]) => {
+    console.log(tokens);
+    setFilters({
+      ...filters,
+      where: {
+        ...filters.where,
+        or: tokens.length
+          ? tokens?.map((tokenAddress) => ({
+              tokenAddress,
+            }))
+          : undefined,
+      },
+    });
+  };
+
   return (
     <DepositsTableFilterContext.Provider
       value={{
         filters,
         search,
         tokenOptions: tokens ?? [],
-        selectedTokens,
-        setSelectedTokens,
+        setTokens,
       }}
     >
       {children}
