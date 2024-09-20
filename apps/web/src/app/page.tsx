@@ -7,12 +7,11 @@ import {
   getTopDepositsQueryOptions,
 } from "../query";
 import { constants, SupportedChainsIds } from "@peanut/common";
-import {
-  _SubgraphErrorPolicy_,
-  Deposit_OrderBy,
-  OrderDirection,
-} from "@peanut/webkit";
 import { defaultChain } from "../env";
+import {
+  defaultDepositsTableFilters,
+  DepositsTableFiltersProvider,
+} from "../context/TableFiltersContext";
 
 export default function Home() {
   const queryClient = getQueryClient();
@@ -24,12 +23,7 @@ export default function Home() {
     void queryClient.prefetchQuery(
       getDepositsQueryOptions({
         chainId: defaultChain.id,
-        filters: {
-          where: {},
-          orderBy: Deposit_OrderBy.Timestamp,
-          orderDirection: OrderDirection.Desc,
-          subgraphError: _SubgraphErrorPolicy_.Allow,
-        },
+        filters: defaultDepositsTableFilters,
       }),
     );
   });
@@ -41,7 +35,9 @@ export default function Home() {
           <TopDeposists />
         </div>
         <div className="flex flex-col gap-2 flex-grow">
-          <DepositTable />
+          <DepositsTableFiltersProvider>
+            <DepositTable />
+          </DepositsTableFiltersProvider>
         </div>
       </div>
     </HydrationBoundary>

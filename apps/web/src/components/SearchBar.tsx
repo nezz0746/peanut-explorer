@@ -7,7 +7,7 @@ type SearchBarProps = {
 
 const SearchBar = ({ onChange }: SearchBarProps) => {
   return (
-    <div className="relative flex-1 w-full">
+    <div className="relative flex w-full">
       <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
       <Input
         type="search"

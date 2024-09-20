@@ -85,6 +85,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </div>
           {links.map((link) => (
             <Link
+              key={link.href}
               href={link.href}
               target={link.target ?? "_self"}
               className="text-foreground transition-colors hover:text-foreground text-nowrap"
@@ -123,6 +124,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               </Link>
               {links.map((link) => (
                 <Link
+                  key={link.href}
                   href={link.href}
                   target={link.target ?? "_self"}
                   className="hover:text-foreground text-nowrap"
@@ -165,7 +167,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               <SelectGroup>
                 <SelectLabel>Networks</SelectLabel>
                 {Object.keys(constants.subgraphURLs).map((chainId) => (
-                  <SelectItem value={chainId}>
+                  <SelectItem value={chainId} key={chainId}>
                     <div className="flex flex-row items-center justify-start gap-2">
                       <Image
                         src={getChainImageURL(chainId)}
