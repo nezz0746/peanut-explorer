@@ -64,30 +64,13 @@ export const DepositsTableFiltersProvider = ({
    * @param searchString
    */
   const search = (searchString: string) => {
-    if (searchString === "") {
-      setFilters({
-        ...filters,
-        where: {
-          ...filters.where,
-          or: undefined,
-        },
-      });
-    } else {
-      setFilters({
-        ...filters,
-        where: {
-          ...filters.where,
-          or: [
-            {
-              senderAddress: searchString,
-            },
-            {
-              tokenAddress: searchString,
-            },
-          ],
-        },
-      });
-    }
+    setFilters({
+      ...filters,
+      where: {
+        ...filters.where,
+        senderAddress: searchString === "" ? undefined : searchString,
+      },
+    });
   };
 
   return (
