@@ -1,6 +1,6 @@
-import { SupportedChainsIds } from "../../../../packages/peanute-common/dist";
 import { createContext, useContext, useState } from "react";
 import { defaultChain } from "../env";
+import { SupportedChainsIds } from "@peanut/common";
 
 const ChainContext = createContext<{
   chainId: SupportedChainsIds;
