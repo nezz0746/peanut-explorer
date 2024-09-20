@@ -30,7 +30,7 @@ export class PeanutAPI {
   async getTokenOptions(): Promise<MultiSelectProps["options"]> {
     return this.sdk
       .depositTotals_collection({
-        first: 20,
+        first: 50,
         subgraphError: _SubgraphErrorPolicy_.Allow,
       })
       .then((res) => {
