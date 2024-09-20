@@ -7,6 +7,12 @@ import {
   getTopDepositsQueryOptions,
 } from "../query";
 import { constants, SupportedChainsIds } from "@peanut/common";
+import {
+  _SubgraphErrorPolicy_,
+  Deposit_OrderBy,
+  OrderDirection,
+} from "@peanut/webkit";
+import { defaultChain } from "../env";
 
 export default function Home() {
   const queryClient = getQueryClient();
@@ -17,8 +23,13 @@ export default function Home() {
     void queryClient.prefetchQuery(getTopDepositsQueryOptions(chainId));
     void queryClient.prefetchQuery(
       getDepositsQueryOptions({
-        chainId: chainId,
-        searchString: null,
+        chainId: defaultChain.id,
+        filters: {
+          where: {},
+          orderBy: Deposit_OrderBy.Timestamp,
+          orderDirection: OrderDirection.Desc,
+          subgraphError: _SubgraphErrorPolicy_.Allow,
+        },
       }),
     );
   });
