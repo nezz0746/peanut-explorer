@@ -42,6 +42,7 @@ export type Deposit = {
   amount: Scalars['BigInt']['output'];
   chainId: Scalars['Int']['output'];
   claimed: Scalars['Boolean']['output'];
+  claimedAt?: Maybe<Scalars['BigInt']['output']>;
   contractType: Scalars['Int']['output'];
   id: Scalars['ID']['output'];
   recipient?: Maybe<Scalars['Bytes']['output']>;
@@ -305,6 +306,14 @@ export type Deposit_Filter = {
   chainId_not?: InputMaybe<Scalars['Int']['input']>;
   chainId_not_in?: InputMaybe<Array<Scalars['Int']['input']>>;
   claimed?: InputMaybe<Scalars['Boolean']['input']>;
+  claimedAt?: InputMaybe<Scalars['BigInt']['input']>;
+  claimedAt_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  claimedAt_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  claimedAt_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  claimedAt_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  claimedAt_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  claimedAt_not?: InputMaybe<Scalars['BigInt']['input']>;
+  claimedAt_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   claimed_in?: InputMaybe<Array<Scalars['Boolean']['input']>>;
   claimed_not?: InputMaybe<Scalars['Boolean']['input']>;
   claimed_not_in?: InputMaybe<Array<Scalars['Boolean']['input']>>;
@@ -410,6 +419,7 @@ export enum Deposit_OrderBy {
   Amount = 'amount',
   ChainId = 'chainId',
   Claimed = 'claimed',
+  ClaimedAt = 'claimedAt',
   ContractType = 'contractType',
   Id = 'id',
   Recipient = 'recipient',
@@ -904,7 +914,7 @@ export type DepositQueryVariables = Exact<{
 }>;
 
 
-export type DepositQuery = { __typename?: 'Query', deposit?: { __typename?: 'Deposit', id: string, amount: any, tokenAddress: any, contractType: number, claimed: boolean, requiresMFA: boolean, timestamp: any, tokenId: any, senderAddress: any, recipient?: any | null, reclaimableAfter?: any | null, chainId: number, tokenTotals: { __typename?: 'DepositTotals', id: string, tokenAddress: any, name?: string | null, symbol?: string | null, decimals?: number | null, totalDeposited: any, totalDeposists: any, totalClaimed: any, chainId: number } } | null };
+export type DepositQuery = { __typename?: 'Query', deposit?: { __typename?: 'Deposit', id: string, amount: any, tokenAddress: any, contractType: number, claimed: boolean, claimedAt?: any | null, requiresMFA: boolean, timestamp: any, tokenId: any, senderAddress: any, recipient?: any | null, reclaimableAfter?: any | null, chainId: number, tokenTotals: { __typename?: 'DepositTotals', id: string, tokenAddress: any, name?: string | null, symbol?: string | null, decimals?: number | null, totalDeposited: any, totalDeposists: any, totalClaimed: any, chainId: number } } | null };
 
 export type DepositsQueryVariables = Exact<{
   skip?: InputMaybe<Scalars['Int']['input']>;
@@ -917,7 +927,7 @@ export type DepositsQueryVariables = Exact<{
 }>;
 
 
-export type DepositsQuery = { __typename?: 'Query', deposits: Array<{ __typename?: 'Deposit', id: string, amount: any, tokenAddress: any, contractType: number, claimed: boolean, requiresMFA: boolean, timestamp: any, tokenId: any, senderAddress: any, recipient?: any | null, reclaimableAfter?: any | null, chainId: number, tokenTotals: { __typename?: 'DepositTotals', id: string, tokenAddress: any, name?: string | null, symbol?: string | null, decimals?: number | null, totalDeposited: any, totalDeposists: any, totalClaimed: any, chainId: number } }> };
+export type DepositsQuery = { __typename?: 'Query', deposits: Array<{ __typename?: 'Deposit', id: string, amount: any, tokenAddress: any, contractType: number, claimed: boolean, claimedAt?: any | null, requiresMFA: boolean, timestamp: any, tokenId: any, senderAddress: any, recipient?: any | null, reclaimableAfter?: any | null, chainId: number, tokenTotals: { __typename?: 'DepositTotals', id: string, tokenAddress: any, name?: string | null, symbol?: string | null, decimals?: number | null, totalDeposited: any, totalDeposists: any, totalClaimed: any, chainId: number } }> };
 
 export type DepositEventQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -1043,6 +1053,7 @@ export const DepositDocument = gql`
     }
     contractType
     claimed
+    claimedAt
     requiresMFA
     timestamp
     tokenId
@@ -1080,6 +1091,7 @@ export const DepositsDocument = gql`
     }
     contractType
     claimed
+    claimedAt
     requiresMFA
     timestamp
     tokenId
