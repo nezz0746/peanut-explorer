@@ -36,8 +36,8 @@ export default function Home() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <div className="flex flex-col md:flex-row w-full justify-center p-4 gap-4">
-        <div className="flex flex-col gap-2 md:w-[400px]">
+      <div className="flex flex-col w-full justify-center p-4 gap-4">
+        <div className="flex flex-col gap-2 ">
           <TopDeposists />
         </div>
         <div className="flex flex-col gap-2 flex-grow">
