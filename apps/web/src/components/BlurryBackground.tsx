@@ -10,7 +10,7 @@ const BlurryBackground: React.FC = () => {
             key={i}
             className="absolute rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-pulse"
             style={{
-              backgroundColor: ["#F2EC66", "#A3B5EF"][i % 3],
+              backgroundColor: ["#ffb0ee", "#F2EC66", "#A3B5EF"][i % 3],
               width: `${Math.random() * 30 + 10}%`,
               height: `${Math.random() * 30 + 10}%`,
               top: `${Math.random() * 100}%`,

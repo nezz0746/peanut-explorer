@@ -7,11 +7,8 @@ import {
   getTopDepositsQueryOptions,
 } from "../query";
 import { constants, SupportedChainsIds } from "@peanut/common";
-import { defaultChain } from "../env";
-import {
-  defaultDepositsTableFilters,
-  DepositsTableFiltersProvider,
-} from "../context/TableFiltersContext";
+import { defaultChain, defaultDepositsTableFilters } from "../env";
+import { DepositsTableFiltersProvider } from "../context/TableFiltersContext";
 
 export default function Home() {
   const queryClient = getQueryClient();

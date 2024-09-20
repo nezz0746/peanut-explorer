@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import {
   _SubgraphErrorPolicy_,
   Deposit_OrderBy,
@@ -11,13 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useExplorerChain } from "./ChainContext";
 import { PeanutAPI } from "../services/peanut-api";
 import { MultiSelectProps } from "@peanut/ui/components/ui/multi-select";
-
-export const defaultDepositsTableFilters: DepositsQueryVariables = {
-  where: {},
-  orderBy: Deposit_OrderBy.Timestamp,
-  orderDirection: OrderDirection.Desc,
-  subgraphError: _SubgraphErrorPolicy_.Allow,
-};
+import { defaultDepositsTableFilters } from "../env";
 
 const DepositsTableFilterContext = createContext<{
   filters: DepositsQueryVariables;
