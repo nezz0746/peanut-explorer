@@ -48,6 +48,7 @@ query depositTotals($id: ID!, $block: Block_height, $subgraphError: _SubgraphErr
     }
     contractType
     claimed
+    claimedAt
     requiresMFA
     timestamp
     tokenId
@@ -82,6 +83,7 @@ query depositTotals($id: ID!, $block: Block_height, $subgraphError: _SubgraphErr
     }
     contractType
     claimed
+    claimedAt
     requiresMFA
     timestamp
     tokenId

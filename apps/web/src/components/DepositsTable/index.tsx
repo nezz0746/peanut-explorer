@@ -1,7 +1,11 @@
 "use client";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { _SubgraphErrorPolicy_ } from "@peanut/webkit";
+import {
+  _SubgraphErrorPolicy_,
+  Deposit_OrderBy,
+  OrderDirection,
+} from "@peanut/webkit";
 import { DataTable } from "../DataTable";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -17,7 +21,26 @@ const DepositTable = () => {
   const { chainId } = useExplorerChain();
 
   const { data } = useSuspenseQuery(
-    getDepositsQueryOptions({ chainId, searchString }),
+    getDepositsQueryOptions({
+      chainId,
+      filters: {
+        where: !searchString
+          ? {}
+          : {
+              or: [
+                {
+                  senderAddress: searchString,
+                },
+                {
+                  tokenAddress: searchString,
+                },
+              ],
+            },
+        orderBy: Deposit_OrderBy.Timestamp,
+        orderDirection: OrderDirection.Desc,
+        subgraphError: _SubgraphErrorPolicy_.Allow,
+      },
+    }),
   );
 
   return (

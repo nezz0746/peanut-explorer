@@ -24,6 +24,22 @@ export const columns: ColumnDef<TableDeposit, keyof TableDeposit>[] = [
     },
   },
   {
+    accessorKey: "chainId",
+    header: "Network",
+    cell({ row }) {
+      const chainId = row.getValue<Deposit["chainId"]>("chainId");
+      return (
+        <Image
+          src={getChainImageURL(chainId.toString())}
+          height={100}
+          width={100}
+          className="w-6 h-6"
+          alt=""
+        />
+      );
+    },
+  },
+  {
     accessorKey: "contractType",
     header: "Type",
     cell({ row }) {
@@ -74,25 +90,19 @@ export const columns: ColumnDef<TableDeposit, keyof TableDeposit>[] = [
       );
     },
   },
+
   {
-    accessorKey: "chainId",
-    header: "Network",
-    cell({ row }) {
-      const chainId = row.getValue<Deposit["chainId"]>("chainId");
-      return (
-        <Image
-          src={getChainImageURL(chainId.toString())}
-          height={100}
-          width={100}
-          className="w-6 h-6"
-          alt=""
-        />
-      );
+    accessorKey: "claimedAt",
+    header: "Claimed At",
+    cell: ({ row }) => {
+      const claimedAt = row.getValue("claimedAt") as string | undefined;
+      if (!claimedAt) return "-";
+      return <>{dayjs(parseInt(claimedAt) * 1000).fromNow()}</>;
     },
   },
   {
     accessorKey: "timestamp",
-    header: "Time",
+    header: "Created At",
     cell: ({ row }) => {
       const timestamp = row.getValue("timestamp") as string | undefined;
       if (!timestamp) return null;

@@ -5,7 +5,7 @@
   "types": "./src/index.ts",
   "scripts": {
     "build": "node helpers/ops.cjs",
-    "prepare:webkit": "pnpm run build && graphql-codegen --config codegen.ts"
+    "codegen": "pnpm run build && graphql-codegen --config codegen.ts"
   },
   "devDependencies": {
     "@peanut/common": "workspace:*",

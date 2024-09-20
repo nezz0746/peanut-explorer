@@ -7,6 +7,7 @@ import { PeanutAPI } from "./services/peanut-api";
 import {
   _SubgraphErrorPolicy_,
   Deposit_OrderBy,
+  DepositsQueryVariables,
   DepositTotals_OrderBy,
   OrderDirection,
 } from "@peanut/webkit";
@@ -59,37 +60,17 @@ export const getTopDepositsQueryOptions = (chainId: SupportedChainsIds) => ({
   },
 });
 
+type GetDepositsQueryOptions = {
+  chainId: SupportedChainsIds;
+  filters: DepositsQueryVariables;
+};
+
 export const getDepositsQueryOptions = ({
   chainId,
-  searchString,
-  sort = {
-    by: Deposit_OrderBy.Timestamp,
-    direction: OrderDirection.Desc,
-  },
-}: {
-  chainId: SupportedChainsIds;
-  searchString: string | null;
-  sort?: {
-    by: Deposit_OrderBy;
-    direction: OrderDirection;
-  };
-}) => ({
-  queryKey: ["depositTable", searchString, chainId],
+  filters,
+}: GetDepositsQueryOptions) => ({
+  queryKey: ["depositTable", chainId, filters],
   queryFn: async () => {
-    return new PeanutAPI(chainId).getDeposits({
-      where: !searchString
-        ? {}
-        : {
-            or: [
-              {
-                tokenAddress: searchString,
-              },
-              { senderAddress: searchString },
-            ],
-          },
-      orderBy: sort.by,
-      orderDirection: sort.direction,
-      subgraphError: _SubgraphErrorPolicy_.Allow,
-    });
+    return new PeanutAPI(chainId).getDeposits(filters);
   },
 });

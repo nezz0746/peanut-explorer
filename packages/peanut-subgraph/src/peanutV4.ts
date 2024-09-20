@@ -121,6 +121,7 @@ export function handleWithdrawEvent(event: WithdrawEventEvent): void {
 
   if (deposit) {
     deposit.claimed = true;
+    deposit.claimedAt = event.block.timestamp;
     deposit.recipient = event.params._recipientAddress;
     deposit.save();
 

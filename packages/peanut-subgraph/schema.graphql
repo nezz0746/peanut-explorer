@@ -17,6 +17,7 @@ type Deposit @entity(immutable: false) {
   tokenTotals: DepositTotals!
   contractType: Int! # uint8
   claimed: Boolean!
+  claimedAt: BigInt
   requiresMFA: Boolean!
   timestamp: BigInt!
   tokenId: BigInt!

@@ -26,7 +26,7 @@ const TopDeposists = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="gap-2 grid grid-cols-2">
+        <div className="gap-2 grid grid-cols-2 md:grid-cols-6">
           {data?.depositTotals_collection.map((deposit) => {
             return <DepositTotalsCard {...deposit} />;
           })}
