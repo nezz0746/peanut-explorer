@@ -5,16 +5,20 @@ import { WagmiProvider } from "wagmi";
 import { wagmiConfig } from "../wagmi";
 import { ChainProvider } from "../context/ChainContext";
 import { getQueryClient } from "../query";
+import { PrivyProvider } from "@privy-io/react-auth";
+import { privyConfig } from "../privy";
 
 const RootProvider = ({ children }: { children: React.ReactNode }) => {
   const queryClient = getQueryClient();
 
   return (
-    <WagmiProvider config={wagmiConfig}>
+    <PrivyProvider {...privyConfig}>
       <QueryClientProvider client={queryClient}>
-        <ChainProvider>{children}</ChainProvider>
+        <WagmiProvider config={wagmiConfig}>
+          <ChainProvider>{children}</ChainProvider>
+        </WagmiProvider>
       </QueryClientProvider>
-    </WagmiProvider>
+    </PrivyProvider>
   );
 };
 
