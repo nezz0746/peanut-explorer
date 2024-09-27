@@ -59,7 +59,13 @@ const DepositTable = () => {
           maxCount={3}
         />
         <div className="flex flex-row items-center gap-2">
-          <SupportedChainsSelect value={chainId} onChange={setChainId} />
+          <SupportedChainsSelect
+            buttonProps={{
+              className: "w-[210px]",
+            }}
+            value={chainId}
+            onChange={setChainId}
+          />
         </div>
       </div>
       <DataTable<TableDeposit, keyof TableDeposit>
