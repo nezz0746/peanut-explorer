@@ -46,7 +46,7 @@ const TokenSelect = ({ tokens, onChange, defaultToken }: TokenSelectProps) => {
                   height={60}
                   width={60}
                   alt=""
-                  className="w-4 h-4"
+                  className="w-6 h-6"
                 />
                 {token.name}
               </div>

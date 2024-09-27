@@ -9,14 +9,19 @@ import {
 } from "@peanut/ui/components/ui/select";
 import { getChainImageURL } from "~/src/helpers";
 import { constants, SupportedChainsIds } from "@peanut/common";
+import classNames from "classnames";
+
+type SupportedChainsSelectProps = {
+  onChange: (chainId: SupportedChainsIds) => void;
+  value: SupportedChainsIds;
+  buttonProps?: React.HTMLAttributes<HTMLButtonElement>;
+};
 
 const SupportedChainsSelect = ({
   onChange,
   value,
-}: {
-  onChange: (chainId: SupportedChainsIds) => void;
-  value: SupportedChainsIds;
-}) => {
+  buttonProps,
+}: SupportedChainsSelectProps) => {
   const chainConfig = constants.supportedChains.find(
     ({ chain }) => chain.id === value,
   );
@@ -26,7 +31,13 @@ const SupportedChainsSelect = ({
         onChange(parseInt(value) as SupportedChainsIds);
       }}
     >
-      <SelectTrigger className="w-[180px] bg-white bg-opacity-85 hover:bg-white">
+      <SelectTrigger
+        {...buttonProps}
+        className={classNames(
+          "bg-white bg-opacity-85 hover:bg-white outline-none",
+          buttonProps?.className ?? "",
+        )}
+      >
         <div className="flex flex-row items-center gap-2">
           <Image
             src={getChainImageURL(value.toString())}
