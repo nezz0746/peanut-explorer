@@ -1,7 +1,7 @@
 "use client";
 
 import { QueryClientProvider } from "@tanstack/react-query";
-import { WagmiProvider } from "wagmi";
+import { WagmiProvider } from "@privy-io/wagmi";
 import { wagmiConfig } from "../wagmi";
 import { ChainProvider } from "../context/ChainContext";
 import { getQueryClient } from "../query";
