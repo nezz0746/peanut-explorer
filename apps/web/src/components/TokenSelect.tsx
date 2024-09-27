@@ -26,6 +26,7 @@ type TokenSelectProps = {
 const TokenSelect = ({ tokens, onChange, defaultToken }: TokenSelectProps) => {
   return (
     <Select
+      defaultValue={defaultToken?.address}
       onValueChange={(address) => {
         const token = tokens.find((token) => token.address === address);
 
@@ -33,10 +34,7 @@ const TokenSelect = ({ tokens, onChange, defaultToken }: TokenSelectProps) => {
       }}
     >
       <SelectTrigger>
-        <SelectValue
-          defaultValue={defaultToken?.address}
-          placeholder="Select a token"
-        />
+        <SelectValue placeholder="Select a token" />
       </SelectTrigger>
       <SelectContent>
         {tokens.map((token) => {

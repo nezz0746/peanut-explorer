@@ -2,7 +2,12 @@ import { useAccount, useBalance, useReadContract } from "wagmi";
 import { Token } from "../components/TokenSelect";
 import { erc20Abi, formatEther, formatUnits } from "viem";
 
-export const useTokenBalance = ({ chainId, isNative, decimals }: Token) => {
+export const useTokenBalance = ({
+  chainId,
+  isNative,
+  decimals,
+  symbol,
+}: Token) => {
   const { address } = useAccount();
   const { data: nativeBalanceData } = useBalance({
     address,
@@ -20,5 +25,6 @@ export const useTokenBalance = ({ chainId, isNative, decimals }: Token) => {
     formatedBalance: isNative
       ? formatEther(nativeBalanceData?.value ?? BigInt(0))
       : formatUnits(tokenBalanceData ?? BigInt(0), decimals),
+    symbol,
   };
 };

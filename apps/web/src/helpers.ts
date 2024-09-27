@@ -1,6 +1,13 @@
 import { Address, Chain } from "viem";
 
-export const formatAmount = (amount: string) => {
+export const formatAmount = (
+  amount: string,
+  options: {
+    decimalsUnderOne?: number;
+  } = {
+    decimalsUnderOne: 8,
+  },
+) => {
   const num = parseFloat(amount);
   if (num >= 1000000) {
     return (num / 1000000).toFixed(2).replace(/\.00$/, "") + "m";
@@ -9,7 +16,7 @@ export const formatAmount = (amount: string) => {
     return (num / 1000).toFixed(2).replace(/\.00$/, "") + "k";
   }
   if (num < 1) {
-    return num.toFixed(8).replace(/0+$/, "");
+    return num.toFixed(options.decimalsUnderOne).replace(/0+$/, "");
   }
   return num.toFixed(2).replace(/\.00$/, "");
 };

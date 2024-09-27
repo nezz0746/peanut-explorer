@@ -11,37 +11,19 @@ import {
 } from "@peanut/ui/components/ui/sheet";
 import Image from "next/image";
 import peanutman from "../../public/peanutman.svg";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-} from "@peanut/ui/components/ui/select";
 import PulsatingButton from "@peanut/ui/components/ui/shimmer-button";
-import {
-  constants,
-  SupportedChainsIds,
-} from "../../../../packages/peanute-common/dist";
 import { useExplorerChain } from "../context/ChainContext";
-import { getChainImageURL } from "../helpers";
 import { HTMLAttributeAnchorTarget } from "react";
 import BlurryBackground from "./BlurryBackground";
 import { UserPill } from "@privy-io/react-auth/ui";
 import { useState } from "react";
-
-export const description =
-  "An application shell with a header and main content area. The header has a navbar, a search input and and a user nav dropdown. The user nav is toggled by a button with an avatar image. The main content area is divided into two rows. The first row has a grid of cards with statistics. The second row has a grid of cards with a table of recent transactions and a list of recent sales.";
+import { constants } from "@peanut/common";
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const { setChainId, chainId: explorerChainId } = useExplorerChain();
+  const { chainId: explorerChainId } = useExplorerChain();
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   const subgraphURL = constants.subgraphURLs[explorerChainId];
-  const chainConfig = constants.supportedChains.find(
-    ({ chain }) => chain.id === explorerChainId,
-  );
 
   const links: {
     name: string;
@@ -67,50 +49,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
         Create Link <LinkIcon className="w-[13px] h-[13px]" />
       </PulsatingButton>
     </Link>
-  );
-
-  const appChainSwitcher = (
-    <div className="flex flex-row items-center gap-2">
-      <Image
-        src={getChainImageURL(explorerChainId.toString())}
-        height={100}
-        width={100}
-        alt=""
-        className="w-6 h-6"
-      />
-      <Select
-        onValueChange={(value) => {
-          setChainId(parseInt(value) as SupportedChainsIds);
-        }}
-      >
-        <SelectTrigger className="w-[180px]">
-          {chainConfig?.chain.name}
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            <SelectLabel>Networks</SelectLabel>
-            {constants.supportedChains.map(({ chain }) => {
-              const chainId = chain.id.toString();
-
-              return (
-                <SelectItem value={chainId} key={chainId}>
-                  <div className="flex flex-row items-center justify-start gap-2">
-                    <Image
-                      src={getChainImageURL(chainId)}
-                      height={100}
-                      width={100}
-                      alt=""
-                      className="w-6 h-6"
-                    />
-                    {chain.name}
-                  </div>
-                </SelectItem>
-              );
-            })}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-    </div>
   );
 
   return (
@@ -194,7 +132,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   ))}
                   {createLinkButton}
                 </div>
-                {appChainSwitcher}
               </div>
             </nav>
           </SheetContent>
@@ -211,8 +148,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             width={100}
           />
         </Link>
-        <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4 justify-end">
-          <div className="hidden md:flex">{appChainSwitcher}</div>
+        <div className="flex w-full items-center gap-2 md:ml-auto justify-end">
           <div className="hidden md:flex">{createLinkButton}</div>
           <div className="[&_button]:bg-white [&_button]:text-black [&_button]:px-5 [&_button]:py-2 [&_button]:rounded-md [&_button]:border [&_button]:h-10">
             <UserPill label="Login" expanded />

@@ -6,6 +6,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@peanut/ui/components/ui/card";
@@ -14,13 +15,17 @@ import { sepoliaTokenList } from "~/src/constants";
 import { useEthersSigner } from "~/src/wagmi";
 import { useExplorerChain } from "~/src/context/ChainContext";
 import { useTokenBalance } from "~/src/hooks/useTokenBalance";
+import { toast } from "@peanut/ui/components/ui/use-toast";
+import { Alert } from "@peanut/ui/components/ui/alert";
+import { formatAmount } from "~/src/helpers";
 
 const CreateLink = () => {
   const { chainId } = useExplorerChain();
   const signer = useEthersSigner({ chainId });
   const [token, setToken] = useState<Token>(sepoliaTokenList[0]);
   const [amount, setAmount] = useState<string>("");
-  const { formatedBalance } = useTokenBalance(token);
+  const { formatedBalance, symbol } = useTokenBalance(token);
+  const [link, setLink] = useState<string | null>(null);
 
   const createLink = async () => {
     if (!signer) {
@@ -36,12 +41,20 @@ const CreateLink = () => {
 
     console.log("linkDetails", linkDetails);
 
-    const { link, txHash } = await peanut.createLink({
-      structSigner: {
-        signer: signer,
-      },
-      linkDetails,
-    });
+    try {
+      const { link, txHash } = await peanut.createLink({
+        structSigner: {
+          signer: signer,
+        },
+        linkDetails,
+      });
+
+      setLink(link);
+    } catch (error) {
+      toast({
+        title: "An error occurred",
+      });
+    }
   };
 
   return (
@@ -56,7 +69,13 @@ const CreateLink = () => {
 
         <CardContent>
           <div className="flex flex-col gap-2">
-            {formatedBalance}{" "}
+            <div className="flex flex-row justify-between items-end">
+              <p className="tracking-tight text-gray-600">Balance</p>
+              <div className="flex flex-row gap-2 text-lg">
+                {formatAmount(formatedBalance, { decimalsUnderOne: 5 })}{" "}
+                <span className="font-bold">{symbol}</span>
+              </div>
+            </div>
             <TokenSelect
               defaultToken={sepoliaTokenList[0]}
               tokens={sepoliaTokenList}
@@ -73,6 +92,13 @@ const CreateLink = () => {
             <Button onClick={createLink}>Confirm</Button>
           </div>
         </CardContent>
+        {link && (
+          <CardFooter>
+            <Alert variant="default">
+              Share this link for the recipient to claim the tokens: {link}
+            </Alert>
+          </CardFooter>
+        )}
       </Card>
     </div>
   );

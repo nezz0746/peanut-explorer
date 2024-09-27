@@ -14,12 +14,13 @@ import {
   MultiSelectRef,
 } from "@peanut/ui/components/ui/multi-select";
 import { useEffect, useRef } from "react";
+import SupportedChainsSelect from "../SupportedChainSelect";
 dayjs.extend(relativeTime);
 
 const DepositTable = () => {
   const { search, filters, tokenOptions, setTokens } =
     useDepositsTableFilters();
-  const { chainId } = useExplorerChain();
+  const { chainId, setChainId } = useExplorerChain();
 
   const { data } = useSuspenseQuery(
     getDepositsQueryOptions({
@@ -57,6 +58,9 @@ const DepositTable = () => {
           animation={2}
           maxCount={3}
         />
+        <div className="flex flex-row items-center gap-2">
+          <SupportedChainsSelect value={chainId} onChange={setChainId} />
+        </div>
       </div>
       <DataTable<TableDeposit, keyof TableDeposit>
         columns={columns}
