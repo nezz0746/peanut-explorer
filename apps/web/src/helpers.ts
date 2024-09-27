@@ -23,7 +23,7 @@ export const truncateAddress = (address?: string | null, length?: number) => {
 export const getExplorerLink = (
   data: Address | string | undefined | null,
   path: "tx" | "address",
-  chain: Chain = constants.chain,
+  chain?: Chain,
 ) => {
   if (!data) return "";
   return `${chain?.blockExplorers?.default?.url}/${path}/${data}`;

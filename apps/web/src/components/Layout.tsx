@@ -34,17 +34,14 @@ import { useState } from "react";
 export const description =
   "An application shell with a header and main content area. The header has a navbar, a search input and and a user nav dropdown. The user nav is toggled by a button with an avatar image. The main content area is divided into two rows. The first row has a grid of cards with statistics. The second row has a grid of cards with a table of recent transactions and a list of recent sales.";
 
-const networkNames: Record<SupportedChainsIds, string> = {
-  "10": "Optimism",
-  "137": "Polygon",
-  "42161": "Arbitrum",
-  "8453": "Base",
-  "324": "ZKsync Era",
-};
-
 export function Layout({ children }: { children: React.ReactNode }) {
   const { setChainId, chainId: explorerChainId } = useExplorerChain();
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+
+  const subgraphURL = constants.subgraphURLs[explorerChainId];
+  const chainConfig = constants.supportedChains.find(
+    ({ chain }) => chain.id === explorerChainId,
+  );
 
   const links: {
     name: string;
@@ -53,7 +50,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   }[] = [
     {
       name: "API Playground",
-      href: constants.subgraphURLs[explorerChainId],
+      href: subgraphURL,
       target: "_blank",
     },
   ];
@@ -87,25 +84,29 @@ export function Layout({ children }: { children: React.ReactNode }) {
         }}
       >
         <SelectTrigger className="w-[180px]">
-          {networkNames[explorerChainId]}
+          {chainConfig?.chain.name}
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
             <SelectLabel>Networks</SelectLabel>
-            {Object.keys(constants.subgraphURLs).map((chainId) => (
-              <SelectItem value={chainId} key={chainId}>
-                <div className="flex flex-row items-center justify-start gap-2">
-                  <Image
-                    src={getChainImageURL(chainId)}
-                    height={100}
-                    width={100}
-                    alt=""
-                    className="w-6 h-6"
-                  />
-                  {networkNames[parseInt(chainId) as SupportedChainsIds]}
-                </div>
-              </SelectItem>
-            ))}
+            {constants.supportedChains.map(({ chain }) => {
+              const chainId = chain.id.toString();
+
+              return (
+                <SelectItem value={chainId} key={chainId}>
+                  <div className="flex flex-row items-center justify-start gap-2">
+                    <Image
+                      src={getChainImageURL(chainId)}
+                      height={100}
+                      width={100}
+                      alt=""
+                      className="w-6 h-6"
+                    />
+                    {chain.name}
+                  </div>
+                </SelectItem>
+              );
+            })}
           </SelectGroup>
         </SelectContent>
       </Select>

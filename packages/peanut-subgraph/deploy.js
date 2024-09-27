@@ -58,6 +58,15 @@ const main = async () => {
       nativeAssetName: "Ethereum",
       nativeAssetSymbol: "ETH",
     },
+    {
+      startBlock: 5231230,
+      contractAddress: "0x70b2132A0A39152722Dd3dA516658626A81Ab02B",
+      network: "sepolia",
+      graphName: "peanut-sepolia",
+      chainId: 11155111,
+      nativeAssetName: "Ethereum",
+      nativeAssetSymbol: "ETH",
+    },
   ];
 
   if (chainId) {
