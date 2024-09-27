@@ -13,14 +13,23 @@ import {
 import { Button } from "@peanut/ui/components/ui/button";
 import { sepoliaTokenList } from "~/src/constants";
 import { useEthersSigner } from "~/src/wagmi";
-import { useExplorerChain } from "~/src/context/ChainContext";
 import { useTokenBalance } from "~/src/hooks/useTokenBalance";
 import { toast } from "@peanut/ui/components/ui/use-toast";
 import { Alert } from "@peanut/ui/components/ui/alert";
 import { formatAmount } from "~/src/helpers";
+import SupportedChainsSelect from "../SupportedChainSelect";
+import { constants, SupportedChainsIds } from "@peanut/common";
+import { useAccount, useSwitchChain } from "wagmi";
+import CopiableInput from "../CopiableInput";
+import { LocalLinkStorage } from "~/src/services/local-links";
+import LinkButton from "../LinkButtons";
 
 const CreateLink = () => {
-  const { chainId } = useExplorerChain();
+  const { switchChainAsync } = useSwitchChain();
+  const { chain } = useAccount();
+  const [chainId, setChainId] = useState<SupportedChainsIds>(
+    constants.supportedChains[0]?.chain.id as SupportedChainsIds,
+  );
   const signer = useEthersSigner({ chainId });
   const [token, setToken] = useState<Token>(sepoliaTokenList[0]);
   const [amount, setAmount] = useState<string>("");
@@ -28,6 +37,11 @@ const CreateLink = () => {
   const [link, setLink] = useState<string | null>(null);
 
   const createLink = async () => {
+    if (chainId !== chain?.id) {
+      await switchChainAsync({
+        chainId,
+      });
+    }
     if (!signer) {
       return alert("Please connect your wallet");
     }
@@ -39,8 +53,6 @@ const CreateLink = () => {
       tokenDecimals: token.decimals,
     };
 
-    console.log("linkDetails", linkDetails);
-
     try {
       const { link, txHash } = await peanut.createLink({
         structSigner: {
@@ -50,6 +62,12 @@ const CreateLink = () => {
       });
 
       setLink(link);
+      new LocalLinkStorage().add({
+        sender: signer._address,
+        link,
+        txHash,
+        linkDetails: linkDetails,
+      });
     } catch (error) {
       toast({
         title: "An error occurred",
@@ -58,7 +76,7 @@ const CreateLink = () => {
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 max-w-[50%]">
       <Card>
         <CardHeader>
           <CardTitle>Send Tokens</CardTitle>
@@ -83,6 +101,7 @@ const CreateLink = () => {
                 setToken(token);
               }}
             />
+            <SupportedChainsSelect value={chainId} onChange={setChainId} />
             <TokenInput
               placeholder="0"
               onChange={(e) => {
@@ -94,8 +113,18 @@ const CreateLink = () => {
         </CardContent>
         {link && (
           <CardFooter>
-            <Alert variant="default">
-              Share this link for the recipient to claim the tokens: {link}
+            <Alert
+              className="bg-gray-100 flex flex-col gap-2 border"
+              variant="default"
+            >
+              <h2 className="font-peanut text-2xl">Congratulations !</h2>
+              <CopiableInput text={link} />
+              <div className="flex flex-row items-center gap-2">
+                Share:
+                <LinkButton link={link} type="telegram" />
+                <LinkButton link={link} type="whatsapp" />
+                <LinkButton link={link} type="message" />
+              </div>
             </Alert>
           </CardFooter>
         )}

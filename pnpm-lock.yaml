@@ -74,6 +74,9 @@ importers:
       '@tanstack/react-table':
         specifier: ^8.20.5
         version: 8.20.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      classnames:
+        specifier: ^2.5.1
+        version: 2.5.1
       dayjs:
         specifier: ^1.11.13
         version: 1.11.13
@@ -4821,6 +4824,9 @@ packages:
 
   class-variance-authority@0.7.0:
     resolution: {integrity: sha512-jFI8IQw4hczaL4ALINxqLEXQbWcNjoSkloa4IaufXCJr6QawJyw7tuRysRsrE8w2p/4gGaxKIt/hX3qz/IbD1A==}
+
+  classnames@2.5.1:
+    resolution: {integrity: sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow==}
 
   clean-regexp@1.0.0:
     resolution: {integrity: sha512-GfisEZEJvzKrmGWkvfhgzcz/BllN1USeqD2V6tg14OAOgaCD2Z/PUEuxnAZ/nPvmaHRG7a8y77p1T/IRQ4D1Hw==}
@@ -16316,6 +16322,8 @@ snapshots:
   class-variance-authority@0.7.0:
     dependencies:
       clsx: 2.0.0
+
+  classnames@2.5.1: {}
 
   clean-regexp@1.0.0:
     dependencies:
