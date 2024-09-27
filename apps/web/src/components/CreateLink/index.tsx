@@ -1,7 +1,6 @@
 import TokenSelect, { Token } from "../TokenSelect";
 import { useState } from "react";
 import TokenInput from "../TokenInput";
-import peanut from "@squirrel-labs/peanut-sdk";
 import {
   Card,
   CardContent,
@@ -12,67 +11,41 @@ import {
 } from "@peanut/ui/components/ui/card";
 import { Button } from "@peanut/ui/components/ui/button";
 import { sepoliaTokenList } from "~/src/constants";
-import { useEthersSigner } from "~/src/wagmi";
 import { useTokenBalance } from "~/src/hooks/useTokenBalance";
-import { toast } from "@peanut/ui/components/ui/use-toast";
 import { Alert } from "@peanut/ui/components/ui/alert";
 import { formatAmount } from "~/src/helpers";
 import SupportedChainsSelect from "../SupportedChainSelect";
 import { constants, SupportedChainsIds } from "@peanut/common";
-import { useAccount, useSwitchChain } from "wagmi";
 import CopiableInput from "../CopiableInput";
-import { LocalLinkStorage } from "~/src/services/local-links";
 import LinkButton from "../LinkButtons";
+import useCreateLink from "~/src/hooks/useCreateLink";
+import { useAccountEffect, useChainId } from "wagmi";
 
 const CreateLink = () => {
-  const { switchChainAsync } = useSwitchChain();
-  const { chain } = useAccount();
-  const [chainId, setChainId] = useState<SupportedChainsIds>(
-    constants.supportedChains[0]?.chain.id as SupportedChainsIds,
+  const wagmiChainId = useChainId();
+  const [chainId, setChainId] = useState<SupportedChainsIds | undefined>(
+    constants.supportedChains.find(({ chain }) => chain.id === wagmiChainId)
+      ?.chain.id,
   );
-  const signer = useEthersSigner({ chainId });
+  useAccountEffect({
+    onConnect: (data) => {
+      const supportedChains = constants.supportedChains.map(
+        ({ chain }) => chain.id,
+      ) as number[];
+      if (supportedChains.includes(data.chainId)) {
+        setChainId(data.chainId as SupportedChainsIds);
+      }
+    },
+  });
   const [token, setToken] = useState<Token>(sepoliaTokenList[0]);
   const [amount, setAmount] = useState<string>("");
   const { formatedBalance, symbol } = useTokenBalance(token);
   const [link, setLink] = useState<string | null>(null);
+  const { createLink, loading } = useCreateLink({ chainId, token });
 
-  const createLink = async () => {
-    if (chainId !== chain?.id) {
-      await switchChainAsync({
-        chainId,
-      });
-    }
-    if (!signer) {
-      return alert("Please connect your wallet");
-    }
-
-    const linkDetails = {
-      chainId: chainId.toString(),
-      tokenAmount: amount,
-      tokenType: 0,
-      tokenDecimals: token.decimals,
-    };
-
-    try {
-      const { link, txHash } = await peanut.createLink({
-        structSigner: {
-          signer: signer,
-        },
-        linkDetails,
-      });
-
-      setLink(link);
-      new LocalLinkStorage().add({
-        sender: signer._address,
-        link,
-        txHash,
-        linkDetails: linkDetails,
-      });
-    } catch (error) {
-      toast({
-        title: "An error occurred",
-      });
-    }
+  const create = async () => {
+    const link = await createLink(amount);
+    if (link) setLink(link);
   };
 
   return (
@@ -108,7 +81,9 @@ const CreateLink = () => {
                 setAmount(e.target.value);
               }}
             />
-            <Button onClick={createLink}>Confirm</Button>
+            <Button onClick={create} loading={loading}>
+              Confirm
+            </Button>
           </div>
         </CardContent>
         {link && (

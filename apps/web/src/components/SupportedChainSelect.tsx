@@ -13,7 +13,7 @@ import classNames from "classnames";
 
 type SupportedChainsSelectProps = {
   onChange: (chainId: SupportedChainsIds) => void;
-  value: SupportedChainsIds;
+  value?: SupportedChainsIds;
   buttonProps?: React.HTMLAttributes<HTMLButtonElement>;
 };
 
@@ -39,13 +39,15 @@ const SupportedChainsSelect = ({
         )}
       >
         <div className="flex flex-row items-center gap-2">
-          <Image
-            src={getChainImageURL(value.toString())}
-            height={100}
-            width={100}
-            alt=""
-            className="w-6 h-6"
-          />
+          {value && (
+            <Image
+              src={getChainImageURL(value.toString())}
+              height={100}
+              width={100}
+              alt=""
+              className="w-6 h-6"
+            />
+          )}
           {chainConfig?.chain.name}
         </div>
       </SelectTrigger>
