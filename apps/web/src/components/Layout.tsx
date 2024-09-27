@@ -62,9 +62,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
     <Link href={"/new-link"} onClick={() => setIsSheetOpen(false)}>
       <PulsatingButton
         shimmerSize="2px"
-        shimmerColor="#fff421"
-        borderRadius="10px"
-        className="bg-gray-200 w-full md:w-auto md:h-10 text-sm gap-2"
+        shimmerColor="blue"
+        borderRadius="6px"
+        background="#FFFFFF"
+        className="w-full md:w-auto md:h-[38px] text-black text-sm gap-2"
       >
         Create Link <LinkIcon className="w-[13px] h-[13px]" />
       </PulsatingButton>
@@ -118,7 +119,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <nav className="hidden flex-col  gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
           <div className="flex flex-row items-center gap-2">
             <Link
-              href="#"
+              href="/"
               className="flex w-10 h-10 items-center gap-2 text-lg font-semibold md:text-base"
             >
               <div className="">
@@ -198,7 +199,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </SheetContent>
         </Sheet>
         <Link
-          href="#"
+          href="/"
           className="flex md:hidden items-center gap-2 text-lg font-semibold"
         >
           <Image
