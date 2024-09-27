@@ -1,16 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { CircleUser, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Button } from "@peanut/ui/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@peanut/ui/components/ui/dropdown-menu";
+
 import {
   Sheet,
   SheetContent,
@@ -33,7 +26,8 @@ import {
 import { useExplorerChain } from "../context/ChainContext";
 import { getChainImageURL } from "../helpers";
 import { HTMLAttributeAnchorTarget } from "react";
-import BlurryBackground from './BlurryBackground';
+import BlurryBackground from "./BlurryBackground";
+import { UserPill } from "@privy-io/react-auth/ui";
 
 export const description =
   "An application shell with a header and main content area. The header has a navbar, a search input and and a user nav dropdown. The user nav is toggled by a button with an avatar image. The main content area is divided into two rows. The first row has a grid of cards with statistics. The second row has a grid of cards with a table of recent transactions and a list of recent sales.";
@@ -64,7 +58,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen w-full flex-col">
       <BlurryBackground />
-      <header className="sticky top-0 flex bg-white/70 z-10 h-16 items-center gap-4 border-b bg-background/70 backdrop-blur-md px-4 md:px-6">
+      <header className="sticky top-0 flex bg-white/60 z-10 h-16 items-center gap-4 border-b backdrop-blur-md px-4 md:px-6">
         <nav className="hidden flex-col  gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
           <div className="flex flex-row items-center gap-2">
             <Link
@@ -184,20 +178,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 ))}
               </SelectGroup>
             </SelectContent>
-          </Select>{" "}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="secondary" size="icon" className="rounded-full">
-                <CircleUser className="h-5 w-5" />
-                <span className="sr-only">Toggle user menu</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem disabled>Create Link</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          </Select>
+          <div className="[&_button]:bg-white [&_button]:text-black [&_button]:px-5 [&_button]:py-2 [&_button]:rounded-md [&_button]:border [&_button]:h-10">
+            <UserPill label="Login" expanded />
+          </div>
         </div>
       </header>
       <main className="flex flex-1 flex-col">{children}</main>
