@@ -6,7 +6,7 @@ import {
   sepolia,
   zksync,
 } from "viem/chains";
-import { Constants, SupportedChainConfig } from "./types";
+import { Constants, SupportedChainConfig, TokenList } from "./types";
 
 export type AppChainId = (typeof base)["id"];
 

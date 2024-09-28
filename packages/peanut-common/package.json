@@ -3,7 +3,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "prepare:common": "node src/build.js"
+    "prepare:common": "node src/build.js",
+    "generate:tokenlists": "tsx src/get-token-lists.ts"
   },
   "devDependencies": {
     "@types/node": "^20.10.8",
