@@ -103,7 +103,7 @@ const pullSchema = async function ({
 const main = async function () {
   const urls = [
     {
-      schemaUrl: constants.supportedChains[10].sugraphURL,
+      schemaUrl: constants.supportedChains[0].sugraphURL,
       fileName: "subgraph",
       depthLimit: 5,
     },

@@ -1,3 +1,5 @@
+"use client";
+
 import peanut, { interfaces } from "@squirrel-labs/peanut-sdk";
 import { useMutation } from "@tanstack/react-query";
 import { useEthersSigner } from "../wagmi";
@@ -5,8 +7,7 @@ import { SupportedChainsIds } from "@peanut/common";
 import { useAccount, useSwitchChain } from "wagmi";
 import { Token } from "../components/TokenSelect";
 import { toast } from "@peanut/ui/components/ui/use-toast";
-import { useLocalStorage } from "@uidotdev/usehooks";
-import { LocalLink } from "../types";
+import { useLocalLinkStorage } from "./useLocalLinkStorage";
 
 type UseCreateLinkParams = {
   chainId?: SupportedChainsIds;
@@ -17,7 +18,7 @@ const useCreateLink = ({ chainId, token }: UseCreateLinkParams) => {
   const signer = useEthersSigner({ chainId });
   const { chain } = useAccount();
   const { switchChainAsync } = useSwitchChain();
-  const [links, setLinks] = useLocalStorage<LocalLink[]>("peanut-links", []);
+  const [, { add }] = useLocalLinkStorage();
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (amount: string) => {
@@ -46,15 +47,12 @@ const useCreateLink = ({ chainId, token }: UseCreateLinkParams) => {
         link = res.link;
         txHash = res.txHash;
 
-        setLinks([
-          ...links,
-          {
-            sender: signer._address,
-            link,
-            txHash,
-            linkDetails: createParams.linkDetails,
-          },
-        ]);
+        add({
+          sender: signer._address,
+          link,
+          txHash,
+          linkDetails: createParams.linkDetails,
+        });
 
         return link;
       } catch (error) {

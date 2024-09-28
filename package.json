@@ -6,7 +6,7 @@
   "scripts": {
     "build": "dotenv -- turbo build",
     "dev": "dotenv -- turbo dev",
-    "prepare": "dotenv -- turbo prepare",
+    "prepare": "husky",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "ui:add": "pnpm --filter @peanut/ui ui:add"
@@ -15,6 +15,7 @@
     "@peanut/eslint-config": "workspace:*",
     "@peanut/typescript-config": "workspace:*",
     "dotenv-cli": "^7.4.2",
+    "husky": "^9.1.6",
     "prettier": "^3.3.2",
     "turbo": "2.0.6"
   },
