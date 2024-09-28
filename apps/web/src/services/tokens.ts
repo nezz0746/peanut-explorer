@@ -18,7 +18,7 @@ export const tokens: Record<SupportedChainsIds, TokenList> = {
       {
         name: "USDC",
         symbol: "USDC",
-        address: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
+        address: "0x94a9D9AC8a22534E3FaCa9F4e7F2E2cf85d5E4C8",
         decimals: 6,
         chainId: 11155111,
         logoURI:
