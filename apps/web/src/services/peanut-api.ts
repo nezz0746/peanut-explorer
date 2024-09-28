@@ -5,12 +5,9 @@ import {
   _SubgraphErrorPolicy_,
   getSdk as getAPI,
 } from "@peanut/webkit";
-import {
-  constants,
-  SupportedChainsIds,
-} from "../../../../packages/peanute-common/dist";
 import { GraphQLClient } from "graphql-request";
 import { MultiSelectProps } from "@peanut/ui/components/ui/multi-select";
+import { constants, SupportedChainsIds } from "@peanut/common";
 
 export class PeanutAPI {
   sdk: Sdk;

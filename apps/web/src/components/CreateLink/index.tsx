@@ -1,4 +1,4 @@
-import TokenSelect, { Token } from "../TokenSelect";
+import TokenSelect from "../TokenSelect";
 import { useState } from "react";
 import TokenInput from "../TokenInput";
 import {
@@ -10,23 +10,31 @@ import {
   CardTitle,
 } from "@peanut/ui/components/ui/card";
 import { Button } from "@peanut/ui/components/ui/button";
-import { sepoliaTokenList } from "~/src/constants";
 import { useTokenBalance } from "~/src/hooks/useTokenBalance";
 import { Alert } from "@peanut/ui/components/ui/alert";
 import { formatAmount } from "~/src/helpers";
 import SupportedChainsSelect from "../SupportedChainSelect";
-import { constants, SupportedChainsIds } from "@peanut/common";
+import { constants, SupportedChainsIds, Token } from "@peanut/common";
 import CopiableInput from "../CopiableInput";
 import LinkButton from "../LinkButtons";
 import useCreateLink from "~/src/hooks/useCreateLink";
 import { useAccountEffect, useChainId } from "wagmi";
+import { tokens } from "~/src/services/tokens";
+import { base } from "viem/chains";
 
 const CreateLink = () => {
   const wagmiChainId = useChainId();
-  const [chainId, setChainId] = useState<SupportedChainsIds | undefined>(
+  /**
+   * Form specific chain id handling
+   */
+  const [chainId, setChainId] = useState<SupportedChainsIds>(
     constants.supportedChains.find(({ chain }) => chain.id === wagmiChainId)
-      ?.chain.id,
+      ?.chain.id ?? base.id,
   );
+
+  /**
+   * Optimistically update chainId
+   */
   useAccountEffect({
     onConnect: (data) => {
       const supportedChains = constants.supportedChains.map(
@@ -37,9 +45,17 @@ const CreateLink = () => {
       }
     },
   });
-  const [token, setToken] = useState<Token>(sepoliaTokenList[0]);
+
+  /**
+   * Handling form currency & amount & balance
+   */
+  const [token, setToken] = useState<Token>(tokens[chainId].tokens[0]);
   const [amount, setAmount] = useState<string>("");
   const { formatedBalance, symbol } = useTokenBalance(token);
+
+  /**
+   * Handling link creation
+   */
   const [link, setLink] = useState<string | null>(null);
   const { createLink, loading } = useCreateLink({ chainId, token });
 
@@ -68,13 +84,20 @@ const CreateLink = () => {
               </div>
             </div>
             <TokenSelect
-              defaultToken={sepoliaTokenList[0]}
-              tokens={sepoliaTokenList}
+              defaultToken={tokens[chainId].tokens[0]}
+              tokens={tokens[chainId].tokens ?? []}
               onChange={(token) => {
+                console.log(token);
                 setToken(token);
               }}
             />
-            <SupportedChainsSelect value={chainId} onChange={setChainId} />
+            <SupportedChainsSelect
+              value={chainId}
+              onChange={(c) => {
+                setChainId(c);
+                setToken(tokens[c].tokens[0]);
+              }}
+            />
             <TokenInput
               placeholder="0"
               onChange={(e) => {

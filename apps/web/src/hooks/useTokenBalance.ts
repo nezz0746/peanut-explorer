@@ -1,6 +1,6 @@
 import { useAccount, useBalance, useReadContract } from "wagmi";
-import { Token } from "../components/TokenSelect";
 import { erc20Abi, formatEther, formatUnits } from "viem";
+import { Token } from "@peanut/common";
 
 export const useTokenBalance = ({
   chainId,
@@ -11,11 +11,11 @@ export const useTokenBalance = ({
   const { address } = useAccount();
   const { data: nativeBalanceData } = useBalance({
     address,
-    chainId: parseInt(chainId),
+    chainId,
   });
   const { data: tokenBalanceData } = useReadContract({
     address: address,
-    chainId: parseInt(chainId),
+    chainId,
     args: address && [address],
     abi: erc20Abi,
     functionName: "balanceOf",

@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { Token } from "@peanut/common";
 import {
   Select,
   SelectContent,
@@ -7,16 +9,6 @@ import {
 } from "@peanut/ui/components/ui/select";
 import Image from "next/image";
 
-export type Token = {
-  name: string;
-  symbol: string;
-  address: `0x${string}`;
-  chainId: string;
-  decimals: number;
-  isNative?: boolean;
-  image: string;
-};
-
 type TokenSelectProps = {
   tokens: Token[];
   defaultToken?: Token;
@@ -24,13 +16,22 @@ type TokenSelectProps = {
 };
 
 const TokenSelect = ({ tokens, onChange, defaultToken }: TokenSelectProps) => {
+  const [selectedToken, setSelectedToken] = useState(defaultToken?.address);
+
+  useEffect(() => {
+    setSelectedToken(defaultToken?.address);
+  }, [defaultToken]);
+
   return (
     <Select
-      defaultValue={defaultToken?.address}
+      value={selectedToken}
       onValueChange={(address) => {
         const token = tokens.find((token) => token.address === address);
 
-        if (token) onChange(token);
+        if (token) {
+          setSelectedToken(address);
+          onChange(token);
+        }
       }}
     >
       <SelectTrigger>
@@ -39,10 +40,10 @@ const TokenSelect = ({ tokens, onChange, defaultToken }: TokenSelectProps) => {
       <SelectContent>
         {tokens.map((token) => {
           return (
-            <SelectItem value={token.address} className="">
+            <SelectItem key={token.address} value={token.address} className="">
               <div className="flex flex-row items-center justify-start gap-2">
                 <Image
-                  src={token.image}
+                  src={token.logoURI}
                   height={60}
                   width={60}
                   alt=""

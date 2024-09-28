@@ -6,7 +6,7 @@
   "scripts": {
     "build": "dotenv -- turbo build",
     "dev": "dotenv -- turbo dev",
-    "prepare": "husky",
+    "prepare": "husky && dotenv -- turbo prepare",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "ui:add": "pnpm --filter @peanut/ui ui:add"
