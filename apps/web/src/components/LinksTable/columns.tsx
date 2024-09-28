@@ -67,7 +67,7 @@ export const columns: ColumnDef<TableDeposit, keyof TableDeposit>[] = [
 
   {
     accessorKey: "claimedAt",
-    header: "Claimed",
+    header: "Claimed At",
     cell: ({ row }) => {
       const claimedAt = row.getValue("claimedAt") as string | undefined;
       if (!claimedAt) return "-";
@@ -76,7 +76,7 @@ export const columns: ColumnDef<TableDeposit, keyof TableDeposit>[] = [
   },
   {
     accessorKey: "timestamp",
-    header: "Created",
+    header: "Sent At",
     cell: ({ row }) => {
       const timestamp = row.getValue("timestamp") as string | undefined;
       if (!timestamp) return null;
