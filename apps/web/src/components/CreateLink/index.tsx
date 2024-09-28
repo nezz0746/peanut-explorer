@@ -67,68 +67,66 @@ const CreateLink = () => {
   };
 
   return (
-    <div className="flex flex-col gap-2 min-w-[40%]">
-      <Card>
-        <CardHeader>
-          <CardTitle>Send</CardTitle>
-          <CardDescription>
-            Send tokens to a recipient by creating a claimable link.
-          </CardDescription>
-        </CardHeader>
+    <Card>
+      <CardHeader>
+        <CardTitle>Send</CardTitle>
+        <CardDescription>
+          Send tokens to a recipient by creating a claimable link.
+        </CardDescription>
+      </CardHeader>
 
-        <CardContent>
-          <div className="flex flex-col gap-2">
-            <div className="flex flex-row justify-between items-end">
-              <p className="tracking-tight text-gray-600">Balance</p>
-              <div className="flex flex-row gap-2 text-lg">
-                {formatAmount(formatedBalance, { decimalsUnderOne: 5 })}{" "}
-                <span className="font-bold">{symbol}</span>
-              </div>
+      <CardContent>
+        <div className="flex flex-col gap-2">
+          <div className="flex flex-row justify-between items-end">
+            <p className="tracking-tight text-gray-600">Balance</p>
+            <div className="flex flex-row gap-2 text-lg">
+              {formatAmount(formatedBalance, { decimalsUnderOne: 5 })}{" "}
+              <span className="font-bold">{symbol}</span>
             </div>
-            <TokenSelect
-              defaultToken={token}
-              tokens={tokens[chainId].tokens ?? []}
-              onChange={(token) => {
-                setToken(token);
-              }}
-            />
-            <SupportedChainsSelect
-              value={chainId}
-              onChange={(c) => {
-                setChainId(c);
-                setToken(tokens[c].tokens[0]);
-              }}
-            />
-            <TokenInput
-              placeholder="0"
-              onChange={(e) => {
-                setAmount(e.target.value);
-              }}
-            />
-            <Button onClick={create} loading={loading}>
-              Confirm
-            </Button>
           </div>
-        </CardContent>
-        {link && (
-          <CardFooter>
-            <Alert
-              className="bg-gray-100 flex flex-col gap-2 border"
-              variant="default"
-            >
-              <h2 className="font-peanut text-2xl">Congratulations !</h2>
-              <CopiableInput text={link} />
-              <div className="flex flex-row items-center gap-2">
-                Share:
-                <LinkButton link={link} type="telegram" />
-                <LinkButton link={link} type="whatsapp" />
-                <LinkButton link={link} type="message" />
-              </div>
-            </Alert>
-          </CardFooter>
-        )}
-      </Card>
-    </div>
+          <TokenSelect
+            defaultToken={token}
+            tokens={tokens[chainId].tokens ?? []}
+            onChange={(token) => {
+              setToken(token);
+            }}
+          />
+          <SupportedChainsSelect
+            value={chainId}
+            onChange={(c) => {
+              setChainId(c);
+              setToken(tokens[c].tokens[0]);
+            }}
+          />
+          <TokenInput
+            placeholder="0"
+            onChange={(e) => {
+              setAmount(e.target.value);
+            }}
+          />
+          <Button onClick={create} loading={loading}>
+            Confirm
+          </Button>
+        </div>
+      </CardContent>
+      {link && (
+        <CardFooter>
+          <Alert
+            className="bg-gray-100 flex flex-col gap-2 border"
+            variant="default"
+          >
+            <h2 className="font-peanut text-2xl">Congratulations !</h2>
+            <CopiableInput text={link} />
+            <div className="flex flex-row items-center gap-2">
+              Share:
+              <LinkButton link={link} type="telegram" />
+              <LinkButton link={link} type="whatsapp" />
+              <LinkButton link={link} type="message" />
+            </div>
+          </Alert>
+        </CardFooter>
+      )}
+    </Card>
   );
 };
 

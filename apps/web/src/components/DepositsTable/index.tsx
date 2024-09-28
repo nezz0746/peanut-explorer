@@ -61,7 +61,7 @@ const DepositTable = () => {
         <div className="flex flex-row items-center gap-2">
           <SupportedChainsSelect
             buttonProps={{
-              className: "w-[210px]",
+              className: "w-full md:w-[210px]",
             }}
             value={chainId}
             onChange={setChainId}

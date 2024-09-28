@@ -64,11 +64,11 @@ const CreateLinkHistory = () => {
   });
 
   return (
-    <Card className=" flex-grow">
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>Feed</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="overflow-x-scroll">
         <LinksTable deposits={data} />
       </CardContent>
     </Card>
