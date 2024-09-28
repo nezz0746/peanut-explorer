@@ -86,7 +86,7 @@ const CreateLink = () => {
               </div>
             </div>
             <TokenSelect
-              defaultToken={tokens[chainId].tokens[0]}
+              defaultToken={token}
               tokens={tokens[chainId].tokens ?? []}
               onChange={(token) => {
                 setToken(token);
