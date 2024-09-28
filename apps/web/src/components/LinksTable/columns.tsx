@@ -6,9 +6,13 @@ import Image from "next/image";
 import { CheckIcon, LoaderIcon } from "lucide-react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { LocalLink } from "~/src/types";
+import LinkButton from "../LinkButtons";
 dayjs.extend(relativeTime);
 
-export type TableDeposit = DepositsQuery["deposits"][0];
+export type TableDeposit = DepositsQuery["deposits"][0] & {
+  localLink: LocalLink | undefined;
+};
 
 export const columns: ColumnDef<TableDeposit, keyof TableDeposit>[] = [
   {
@@ -77,6 +81,22 @@ export const columns: ColumnDef<TableDeposit, keyof TableDeposit>[] = [
       const timestamp = row.getValue("timestamp") as string | undefined;
       if (!timestamp) return null;
       return <>{dayjs(parseInt(timestamp) * 1000).fromNow()}</>;
+    },
+  },
+  {
+    accessorKey: "localLink",
+    header: "Share",
+    cell: ({ row: { original } }) => {
+      const localLink = original.localLink;
+      if (!localLink) return null;
+      const link = localLink.link;
+      return (
+        <>
+          <LinkButton link={link} type="telegram" />
+          <LinkButton link={link} type="whatsapp" />
+          <LinkButton link={link} type="message" />
+        </>
+      );
     },
   },
 ];

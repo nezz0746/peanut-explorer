@@ -12,12 +12,11 @@ import { useQueries } from "@tanstack/react-query";
 import { useAccount } from "wagmi";
 import { getDepositsQueryOptions } from "~/src/query";
 import LinksTable from "../LinksTable";
+import { useLocalLinkStorage } from "~/src/hooks/useLocalLinkStorage";
+import { _getLocalLink } from "~/src/helpers";
 
 const CreateLinkHistory = () => {
-  /**
-   * TODO:
-   * - Include locally stored links
-   */
+  const [links] = useLocalLinkStorage();
   const { address } = useAccount();
   const { data, loading } = useQueries({
     queries: constants.supportedChains.map(({ chain }) => {
@@ -34,7 +33,28 @@ const CreateLinkHistory = () => {
       const filteredData = results
         .flatMap((result) => result.data ?? [])
         .filter((item): item is Deposit => item !== undefined)
-        .sort((a, b) => b.timestamp - a.timestamp);
+        .sort((a, b) => b.timestamp - a.timestamp)
+        .map((item) => {
+          const localLink = links.find((link) => {
+            try {
+              const url = new URL(link.link);
+              const linkId = url.searchParams.get("i");
+              return linkId === item.id;
+            } catch (error) {
+              console.error("Invalid URL:", link.link);
+              return false;
+            }
+          });
+
+          if (localLink) {
+            localLink.link = _getLocalLink(localLink?.link);
+          }
+
+          return {
+            ...item,
+            localLink,
+          };
+        });
 
       return {
         data: filteredData,

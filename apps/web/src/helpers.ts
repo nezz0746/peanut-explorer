@@ -48,3 +48,11 @@ export const getChainName = (chainId: string) => {
     (chain) => chain.chain.id.toString() === chainId,
   )?.chain.name;
 };
+
+// constant typed string could also be a [string] type.
+// Utility function to get the string;
+export const _getLocalLink = (str?: string) => {
+  if (!str) return "";
+  if (Array.isArray(str)) return str[0];
+  return str;
+};

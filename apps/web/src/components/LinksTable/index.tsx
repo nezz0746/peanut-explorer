@@ -1,8 +1,7 @@
-import { Deposit } from "@peanut/webkit";
 import { DataTable } from "../DataTable";
 import { columns, TableDeposit } from "./columns";
 
-const LinksTable = ({ deposits }: { deposits: Deposit[] }) => {
+const LinksTable = ({ deposits }: { deposits: TableDeposit[] }) => {
   return (
     <DataTable<TableDeposit, keyof TableDeposit>
       columns={columns}
