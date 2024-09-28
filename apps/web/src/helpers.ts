@@ -1,3 +1,4 @@
+import { constants } from "@peanut/common";
 import { Address, Chain } from "viem";
 
 export const formatAmount = (
@@ -40,4 +41,10 @@ export const getTokenImageURL = (tokenAddress: string, chainId: string) => {
 };
 export const getChainImageURL = (chainId: string) => {
   return `https://assets.smold.app/api/chain/${chainId}/logo-128.png`;
+};
+
+export const getChainName = (chainId: string) => {
+  return constants.supportedChains.find(
+    (chain) => chain.chain.id.toString() === chainId,
+  )?.chain.name;
 };

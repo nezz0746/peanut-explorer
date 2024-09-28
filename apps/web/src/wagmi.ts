@@ -8,12 +8,11 @@ import {
   sepolia,
   zksync,
 } from "viem/chains";
-import { http, useConnectorClient } from "wagmi";
+import { http, useConnectorClient, Config } from "wagmi";
 import { alchemyKey } from "./env";
 import { providers } from "ethers";
 import { useMemo } from "react";
 import type { Account, Chain, Client, Transport } from "viem";
-import { Config, useClient } from "wagmi";
 
 export const wagmiConfig = createConfig({
   chains: [mainnet, base, sepolia, optimism, polygon, arbitrum, zksync],

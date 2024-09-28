@@ -22,7 +22,7 @@ const DepositTable = () => {
     useDepositsTableFilters();
   const { chainId, setChainId } = useExplorerChain();
 
-  const { data } = useSuspenseQuery(
+  const { data: deposits } = useSuspenseQuery(
     getDepositsQueryOptions({
       chainId,
       filters,
@@ -70,7 +70,7 @@ const DepositTable = () => {
       </div>
       <DataTable<TableDeposit, keyof TableDeposit>
         columns={columns}
-        data={data?.deposits || []}
+        data={deposits || []}
       />
     </div>
   );
