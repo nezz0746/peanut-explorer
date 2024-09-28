@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { LinkIcon, Menu } from "lucide-react";
+import { LinkIcon, Menu, PlaneIcon, SendHorizonalIcon } from "lucide-react";
 import { Button } from "@peanut/ui/components/ui/button";
 
 import {
@@ -46,7 +46,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         background="#FFFFFF"
         className="w-full md:w-auto md:h-[38px] text-black text-sm gap-2"
       >
-        Create Link <LinkIcon className="w-[13px] h-[13px]" />
+        Send Money <SendHorizonalIcon className="w-[13px] h-[13px]" />
       </PulsatingButton>
     </Link>
   );

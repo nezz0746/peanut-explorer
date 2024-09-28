@@ -1,3 +1,5 @@
+"use client";
+
 import TokenSelect from "../TokenSelect";
 import { useState } from "react";
 import TokenInput from "../TokenInput";
@@ -65,10 +67,10 @@ const CreateLink = () => {
   };
 
   return (
-    <div className="flex flex-col gap-2 max-w-[50%]">
+    <div className="flex flex-col gap-2 min-w-[40%]">
       <Card>
         <CardHeader>
-          <CardTitle>Send Tokens</CardTitle>
+          <CardTitle>Send</CardTitle>
           <CardDescription>
             Send tokens to a recipient by creating a claimable link.
           </CardDescription>
@@ -87,7 +89,6 @@ const CreateLink = () => {
               defaultToken={tokens[chainId].tokens[0]}
               tokens={tokens[chainId].tokens ?? []}
               onChange={(token) => {
-                console.log(token);
                 setToken(token);
               }}
             />

@@ -3,9 +3,8 @@
 import peanut, { interfaces } from "@squirrel-labs/peanut-sdk";
 import { useMutation } from "@tanstack/react-query";
 import { useEthersSigner } from "../wagmi";
-import { SupportedChainsIds } from "@peanut/common";
+import { SupportedChainsIds, Token } from "@peanut/common";
 import { useAccount, useSwitchChain } from "wagmi";
-import { Token } from "../components/TokenSelect";
 import { toast } from "@peanut/ui/components/ui/use-toast";
 import { useLocalLinkStorage } from "./useLocalLinkStorage";
 
