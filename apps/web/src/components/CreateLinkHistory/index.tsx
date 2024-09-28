@@ -16,7 +16,7 @@ import { useLocalLinkStorage } from "~/src/hooks/useLocalLinkStorage";
 import { _getLocalLink } from "~/src/helpers";
 
 const CreateLinkHistory = () => {
-  const [links] = useLocalLinkStorage();
+  const [, { list }] = useLocalLinkStorage();
   const { address } = useAccount();
   const { data, loading } = useQueries({
     queries: constants.supportedChains.map(({ chain }) => {
@@ -35,7 +35,7 @@ const CreateLinkHistory = () => {
         .filter((item): item is Deposit => item !== undefined)
         .sort((a, b) => b.timestamp - a.timestamp)
         .map((item) => {
-          const localLink = links.find((link) => {
+          const localLink = list().find((link) => {
             try {
               const url = new URL(link.link);
               const linkId = url.searchParams.get("i");

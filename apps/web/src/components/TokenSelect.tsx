@@ -8,6 +8,7 @@ import {
   SelectValue,
 } from "@peanut/ui/components/ui/select";
 import Image from "next/image";
+import { Address } from "viem";
 
 type TokenSelectProps = {
   tokens: Token[];
@@ -25,7 +26,7 @@ const TokenSelect = ({ tokens, onChange, defaultToken }: TokenSelectProps) => {
   return (
     <Select
       value={selectedToken}
-      onValueChange={(address) => {
+      onValueChange={(address: Address) => {
         const token = tokens.find((token) => token.address === address);
 
         if (token) {

@@ -62,7 +62,7 @@ const CreateLink = () => {
   const { createLink, loading } = useCreateLink({ chainId, token });
 
   const create = async () => {
-    const link = await createLink(amount);
+    const link = await createLink({ amount, token });
     if (link) setLink(link);
   };
 

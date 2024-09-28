@@ -20,24 +20,36 @@ const useCreateLink = ({ chainId, token }: UseCreateLinkParams) => {
   const [, { add }] = useLocalLinkStorage();
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: async (amount: string) => {
+    mutationFn: async ({ amount, token }: { amount: string; token: Token }) => {
       if (!chainId) return;
       if (chainId !== chain?.id)
         await switchChainAsync({
           chainId,
         });
       if (!signer) return alert("Please connect your wallet");
+      let tokenType: interfaces.EPeanutLinkType =
+        interfaces.EPeanutLinkType.erc20;
+
+      if (token.isNative) {
+        tokenType = interfaces.EPeanutLinkType.native;
+      }
+
+      let linkDetails: interfaces.IPeanutLinkDetails = {
+        chainId: chainId.toString(),
+        tokenAmount: amount,
+        tokenType,
+        tokenDecimals: token.decimals,
+      };
+
+      if (tokenType === interfaces.EPeanutLinkType.erc20) {
+        linkDetails.tokenAddress = token.address;
+      }
 
       const createParams: interfaces.ICreateLinkParams = {
         structSigner: {
           signer: signer,
         },
-        linkDetails: {
-          chainId: chainId.toString(),
-          tokenAmount: amount,
-          tokenType: 0,
-          tokenDecimals: token.decimals,
-        },
+        linkDetails,
       };
       let link = "";
       let txHash = "";

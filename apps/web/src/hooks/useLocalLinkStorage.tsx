@@ -7,23 +7,28 @@ export function useLocalLinkStorage(): [
     add: (link: LocalLink) => void;
     remove: (txHash: string) => void;
     update: (link: LocalLink) => void;
+    list: () => LocalLink[];
   },
 ] {
   const key = "peanut-links";
   const initialValue: LocalLink[] = [];
 
-  // Get the initial value from localStorage or use the initialValue
-  const [links, setLinks] = useState<LocalLink[]>(() => {
-    if (typeof window !== 'undefined') {
+  const list = () => {
+    if (typeof window !== "undefined") {
       const storedValue = localStorage.getItem(key);
       return storedValue ? JSON.parse(storedValue) : initialValue;
     }
     return initialValue;
+  };
+
+  // Get the initial value from localStorage or use the initialValue
+  const [links, setLinks] = useState<LocalLink[]>(() => {
+    return list();
   });
 
   // Update localStorage whenever links change
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       localStorage.setItem(key, JSON.stringify(links));
     }
   }, [links]);
@@ -41,9 +46,11 @@ export function useLocalLinkStorage(): [
   // Function to update a link
   const update = (updatedLink: LocalLink) => {
     setLinks((prevLinks) =>
-      prevLinks.map((link) => (link.txHash === updatedLink.txHash ? updatedLink : link))
+      prevLinks.map((link) =>
+        link.txHash === updatedLink.txHash ? updatedLink : link,
+      ),
     );
   };
 
-  return [links, { add, remove, update }];
+  return [links, { add, remove, update, list }];
 }

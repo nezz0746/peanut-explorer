@@ -25,7 +25,7 @@ export interface Version {
 }
 
 export interface Token {
-  address: string;
+  address: `0x${string}`;
   name: string;
   symbol: string;
   logoURI: string;
