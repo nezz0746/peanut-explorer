@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { LinkIcon, Menu, PlaneIcon, SendHorizonalIcon } from "lucide-react";
+import { Menu, SendHorizonalIcon } from "lucide-react";
 import { Button } from "@peanut/ui/components/ui/button";
 
 import {
@@ -12,30 +12,12 @@ import {
 import Image from "next/image";
 import peanutman from "../../public/peanutman.svg";
 import PulsatingButton from "@peanut/ui/components/ui/shimmer-button";
-import { useExplorerChain } from "../context/ChainContext";
-import { HTMLAttributeAnchorTarget } from "react";
 import BlurryBackground from "./BlurryBackground";
 import { UserPill } from "@privy-io/react-auth/ui";
 import { useState } from "react";
-import { constants } from "@peanut/common";
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const { chainId: explorerChainId } = useExplorerChain();
   const [isSheetOpen, setIsSheetOpen] = useState(false);
-
-  const subgraphURL = constants.subgraphURLs[explorerChainId];
-
-  const links: {
-    name: string;
-    href: string;
-    target?: HTMLAttributeAnchorTarget;
-  }[] = [
-    {
-      name: "API Playground",
-      href: subgraphURL,
-      target: "_blank",
-    },
-  ];
 
   const createLinkButton = (
     <Link href={"/new-link"} onClick={() => setIsSheetOpen(false)}>
@@ -75,16 +57,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
               Peanut Explorer
             </p>
           </div>
-          {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              target={link.target ?? "_self"}
-              className="text-foreground transition-colors hover:text-foreground text-nowrap"
-            >
-              {link.name}
-            </Link>
-          ))}
         </nav>
         <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
           <SheetTrigger asChild>
@@ -119,19 +91,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 </p>
               </Link>
               <div className=" flex flex-col flex-grow justify-between ">
-                <div className="flex flex-col gap-2">
-                  {links.map((link) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      target={link.target ?? "_self"}
-                      className="hover:text-foreground text-nowrap"
-                    >
-                      {link.name}
-                    </Link>
-                  ))}
-                  {createLinkButton}
-                </div>
+                <div className="flex flex-col gap-2">{createLinkButton}</div>
               </div>
             </nav>
           </SheetContent>
