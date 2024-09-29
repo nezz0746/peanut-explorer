@@ -9,23 +9,29 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@privy-io/react-auth": "^1.80.0",
-    "@privy-io/wagmi": "^0.2.12",
+    "@hookform/resolvers": "^3.9.0",
     "@peanut/common": "workspace:*",
     "@peanut/contracts": "workspace:*",
     "@peanut/ui": "workspace:*",
     "@peanut/webkit": "workspace:*",
+    "@privy-io/react-auth": "^1.80.0",
+    "@privy-io/wagmi": "^0.2.12",
+    "@squirrel-labs/peanut-sdk": "^0.5.3",
     "@tanstack/react-query": "^5.52.2",
     "@tanstack/react-table": "^8.20.5",
+    "classnames": "^2.5.1",
     "dayjs": "^1.11.13",
+    "ethers": "^5.7.2",
     "graphql-request": "^6.1.0",
     "lodash": "^4.17.21",
     "lucide-react": "^0.395.0",
     "next": "14.2.6",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.52.2",
     "viem": "2.20.0",
-    "wagmi": "2.12.7"
+    "wagmi": "2.12.7",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "14.2.4",

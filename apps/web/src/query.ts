@@ -1,15 +1,17 @@
 import {
   QueryClient,
+  UseQueryOptions,
   defaultShouldDehydrateQuery,
   isServer,
 } from "@tanstack/react-query";
 import { PeanutAPI } from "./services/peanut-api";
 import {
   _SubgraphErrorPolicy_,
-  Deposit_OrderBy,
   DepositsQueryVariables,
   DepositTotals_OrderBy,
   OrderDirection,
+  DepositsQuery,
+  Deposit,
 } from "@peanut/webkit";
 import { SupportedChainsIds } from "@peanut/common";
 
@@ -60,17 +62,28 @@ export const getTopDepositsQueryOptions = (chainId: SupportedChainsIds) => ({
   },
 });
 
-type GetDepositsQueryOptions = {
+type GetDepositsQueryOptions<TData = Deposit[]> = {
   chainId: SupportedChainsIds;
   filters: DepositsQueryVariables;
+  select?: (data: DepositsQuery) => TData;
+  enabled?: boolean;
 };
 
-export const getDepositsQueryOptions = ({
+export const getDepositsQueryOptions = <TData = Deposit[]>({
   chainId,
   filters,
-}: GetDepositsQueryOptions) => ({
+  select,
+  enabled,
+}: GetDepositsQueryOptions<TData>): UseQueryOptions<
+  DepositsQuery,
+  Error,
+  TData,
+  [string, SupportedChainsIds, DepositsQueryVariables]
+> => ({
   queryKey: ["depositTable", chainId, filters],
   queryFn: async () => {
     return new PeanutAPI(chainId).getDeposits(filters);
   },
+  enabled: enabled ?? !!chainId,
+  select: select ?? ((data: DepositsQuery) => data.deposits as TData),
 });

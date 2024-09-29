@@ -5,18 +5,21 @@ import {
   _SubgraphErrorPolicy_,
   getSdk as getAPI,
 } from "@peanut/webkit";
-import {
-  constants,
-  SupportedChainsIds,
-} from "../../../../packages/peanute-common/dist";
 import { GraphQLClient } from "graphql-request";
 import { MultiSelectProps } from "@peanut/ui/components/ui/multi-select";
+import { constants, SupportedChainsIds } from "@peanut/common";
 
 export class PeanutAPI {
   sdk: Sdk;
 
   constructor(chainId: SupportedChainsIds) {
-    this.sdk = getAPI(new GraphQLClient(constants.subgraphURLs[chainId]));
+    const url = constants.subgraphURLs[chainId];
+
+    if (!url) {
+      console.error(`Chain ${chainId} is not supported`);
+      throw new Error(`Chain ${chainId} is not supported`);
+    }
+    this.sdk = getAPI(new GraphQLClient(url));
   }
 
   async getTotals(props: DepositTotals_CollectionQueryVariables) {

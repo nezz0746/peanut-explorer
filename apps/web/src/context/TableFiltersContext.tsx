@@ -57,7 +57,6 @@ export const DepositsTableFiltersProvider = ({
   };
 
   const setTokens = (tokens: string[]) => {
-    console.log(tokens);
     setFilters({
       ...filters,
       where: {

@@ -6,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@peanut/ui/components/ui/card";
+import NumberTicker from "@peanut/ui/components/ui/number-ticker";
 import { DepositTotals_CollectionQuery } from "@peanut/webkit";
 import { formatUnits } from "viem";
 import { formatAmount } from "../helpers";
@@ -26,7 +27,13 @@ export default function DepositTotalsCard(
         <CardTitle className="text-2xl flex flex-row items-center gap-2">
           {formatAmount(readableTotalDeposited)}
         </CardTitle>
-        <CardDescription>{props.totalDeposists} Deposits</CardDescription>
+        <CardDescription>
+          <NumberTicker
+            className="tracking-tighter"
+            value={props.totalDeposists}
+          />{" "}
+          Deposits
+        </CardDescription>
       </CardHeader>
     </Card>
   );

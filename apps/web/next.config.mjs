@@ -4,7 +4,7 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: "assets.smold.app",
+        hostname: "*",
         protocol: "https",
       },
     ],

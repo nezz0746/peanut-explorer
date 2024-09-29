@@ -6,17 +6,15 @@ import {
   getQueryClient,
   getTopDepositsQueryOptions,
 } from "../query";
-import { constants, SupportedChainsIds } from "@peanut/common";
+import { constants } from "@peanut/common";
 import { defaultChain, defaultDepositsTableFilters } from "../env";
 import { DepositsTableFiltersProvider } from "../context/TableFiltersContext";
 
 export default function Home() {
   const queryClient = getQueryClient();
 
-  Object.keys(constants.subgraphURLs).map((c) => {
-    const chainId = parseInt(c) as SupportedChainsIds;
-
-    void queryClient.prefetchQuery(getTopDepositsQueryOptions(chainId));
+  constants.supportedChains.map(({ chain }) => {
+    void queryClient.prefetchQuery(getTopDepositsQueryOptions(chain.id));
     void queryClient.prefetchQuery(
       getDepositsQueryOptions({
         chainId: defaultChain.id,

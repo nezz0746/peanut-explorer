@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import RootProvider from "../providers/root";
 import { Layout } from "../components/Layout";
+import { Toaster } from "@peanut/ui/components/ui/toaster";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -22,7 +23,10 @@ export default function RootLayout({
       <body className={montserrat.className}>
         <main className="min-h-screen">
           <RootProvider>
-            <Layout>{children}</Layout>
+            <Layout>
+              {children}
+              <Toaster />
+            </Layout>
           </RootProvider>
         </main>
       </body>
