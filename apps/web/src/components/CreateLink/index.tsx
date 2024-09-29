@@ -14,15 +14,18 @@ import {
 import { Button } from "@peanut/ui/components/ui/button";
 import { useTokenBalance } from "~/src/hooks/useTokenBalance";
 import { Alert } from "@peanut/ui/components/ui/alert";
-import { formatAmount } from "~/src/helpers";
+import {
+  _getSupportedChain,
+  _getSupportedChainIds,
+  formatAmount,
+} from "~/src/helpers";
 import SupportedChainsSelect from "../SupportedChainSelect";
-import { constants, SupportedChainsIds, Token } from "@peanut/common";
+import { SupportedChainsIds, Token } from "@peanut/common";
 import CopiableInput from "../CopiableInput";
 import LinkButton from "../LinkButtons";
 import useCreateLink from "~/src/hooks/useCreateLink";
 import { useAccountEffect, useChainId } from "wagmi";
 import { tokens } from "~/src/services/tokens";
-import { base } from "viem/chains";
 
 const CreateLink = () => {
   const wagmiChainId = useChainId();
@@ -30,8 +33,7 @@ const CreateLink = () => {
    * Form specific chain id handling
    */
   const [chainId, setChainId] = useState<SupportedChainsIds>(
-    constants.supportedChains.find(({ chain }) => chain.id === wagmiChainId)
-      ?.chain.id ?? base.id,
+    _getSupportedChain(wagmiChainId),
   );
 
   /**
@@ -39,11 +41,9 @@ const CreateLink = () => {
    */
   useAccountEffect({
     onConnect: (data) => {
-      const supportedChains = constants.supportedChains.map(
-        ({ chain }) => chain.id,
-      ) as number[];
-      if (supportedChains.includes(data.chainId)) {
-        setChainId(data.chainId as SupportedChainsIds);
+      const c = data.chainId as SupportedChainsIds;
+      if (_getSupportedChainIds().includes(c)) {
+        setChainId(c);
       }
     },
   });
@@ -100,6 +100,7 @@ const CreateLink = () => {
           />
           <TokenInput
             placeholder="0"
+            disabled={loading}
             onChange={(e) => {
               setAmount(e.target.value);
             }}

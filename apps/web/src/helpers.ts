@@ -1,5 +1,6 @@
 import { constants } from "@peanut/common";
 import { Address, Chain } from "viem";
+import { base } from "viem/chains";
 
 export const formatAmount = (
   amount: string,
@@ -49,10 +50,19 @@ export const getChainName = (chainId: string) => {
   )?.chain.name;
 };
 
-// constant typed string could also be a [string] type.
-// Utility function to get the string;
 export const _getLocalLink = (str?: string) => {
   if (!str) return "";
   if (Array.isArray(str)) return str[0];
   return str;
+};
+
+export const _getSupportedChainIds = () => {
+  return constants.supportedChains.map(({ chain }) => chain.id);
+};
+
+export const _getSupportedChain = (chainId: number) => {
+  return (
+    constants.supportedChains.find(({ chain }) => chain.id === chainId)?.chain
+      .id ?? base.id
+  );
 };

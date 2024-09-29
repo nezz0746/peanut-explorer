@@ -1,6 +1,18 @@
 import { useState, useEffect } from "react";
 import { LocalLink } from "../types";
 
+const key = "peanut-links";
+
+const initialValue: LocalLink[] = [];
+
+export const list = (): LocalLink[] => {
+  if (typeof window !== "undefined") {
+    const storedValue = localStorage.getItem(key);
+    return storedValue ? JSON.parse(storedValue) : initialValue;
+  }
+  return initialValue;
+};
+
 export function useLocalLinkStorage(): [
   LocalLink[],
   {
@@ -10,17 +22,6 @@ export function useLocalLinkStorage(): [
     list: () => LocalLink[];
   },
 ] {
-  const key = "peanut-links";
-  const initialValue: LocalLink[] = [];
-
-  const list = () => {
-    if (typeof window !== "undefined") {
-      const storedValue = localStorage.getItem(key);
-      return storedValue ? JSON.parse(storedValue) : initialValue;
-    }
-    return initialValue;
-  };
-
   // Get the initial value from localStorage or use the initialValue
   const [links, setLinks] = useState<LocalLink[]>(() => {
     return list();
