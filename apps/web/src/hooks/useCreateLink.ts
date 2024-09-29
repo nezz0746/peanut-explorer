@@ -26,7 +26,10 @@ const useCreateLink = ({ chainId, token }: UseCreateLinkParams) => {
         await switchChainAsync({
           chainId,
         });
-      if (!signer) return alert("Please connect your wallet");
+      if (!signer) {
+        toast({ title: "Please login" });
+        return;
+      }
       let tokenType: interfaces.EPeanutLinkType =
         interfaces.EPeanutLinkType.erc20;
 
