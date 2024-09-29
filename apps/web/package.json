@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.9.0",
     "@peanut/common": "workspace:*",
     "@peanut/contracts": "workspace:*",
     "@peanut/ui": "workspace:*",
@@ -27,8 +28,10 @@
     "next": "14.2.6",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.52.2",
     "viem": "2.20.0",
-    "wagmi": "2.12.7"
+    "wagmi": "2.12.7",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "14.2.4",

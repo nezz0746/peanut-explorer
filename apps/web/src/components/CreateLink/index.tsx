@@ -35,6 +35,8 @@ const CreateLink = () => {
   const [chainId, setChainId] = useState<SupportedChainsIds>(
     _getSupportedChain(wagmiChainId),
   );
+  const [token, setToken] = useState<Token>(tokens[chainId].tokens[0]);
+  const [amount, setAmount] = useState<string>("");
 
   /**
    * Optimistically update chainId
@@ -49,17 +51,11 @@ const CreateLink = () => {
   });
 
   /**
-   * Handling form currency & amount & balance
-   */
-  const [token, setToken] = useState<Token>(tokens[chainId].tokens[0]);
-  const [amount, setAmount] = useState<string>("");
-  const { formatedBalance, symbol } = useTokenBalance(token);
-
-  /**
    * Handling link creation
    */
   const [link, setLink] = useState<string | null>(null);
   const { createLink, loading } = useCreateLink({ chainId, token });
+  const { formatedBalance, symbol } = useTokenBalance(token);
 
   const create = async () => {
     const link = await createLink({ amount, token });
