@@ -46,6 +46,7 @@ const CreateLink = () => {
       const c = data.chainId as SupportedChainsIds;
       if (_getSupportedChainIds().includes(c)) {
         setChainId(c);
+        setToken(tokens[c].tokens[0]);
       }
     },
   });
